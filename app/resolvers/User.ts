@@ -1,16 +1,19 @@
 import { User } from "../entities/User";
-import { Resolver, Arg, Query, Mutation } from "type-graphql";
+import { Resolver, Arg, Query, Mutation, Ctx } from "type-graphql";
 import { FaceBookConnectInput } from "../inputs/FaceBookConnectInput";
 import { FacebookConnectResponse } from "../responses/FacebookConnectResponse";
 import { EmailSignInResponse } from "../responses/EmailSignInResponse";
 import { EmailSignInInput } from "../inputs/EmailSignInInput";
+import { createJWT } from "../utils/createJWT";
 
 @Resolver()
 export class UserResolver {
 
+    
+
     @Query(_returns => String)
-    async returnHello(@Arg("name") name: string){
-      return `Hello ${name}`
+    async returnHello(@Arg("name") name: string, @Ctx() _ctx: any){
+      return `Hello ${name}`;
     };
 
     @Mutation(_returns => FacebookConnectResponse)
@@ -19,10 +22,11 @@ export class UserResolver {
       try {
         const existingUser = await User.findOne({ fbId: fbId });
         if(existingUser) {
+          const token = createJWT(existingUser.id);
           return {
             ok: true,
             error: null,
-            token: "Already Exists"
+            token
           }
         }
       } catch (error) {
@@ -34,11 +38,12 @@ export class UserResolver {
       }
       try {
         const newUser = await User.create({ ...data, profilePhoto: `http://graph.facebook.com/${fbId}/picture?type=square` }).save();
+        const token = createJWT(newUser.id);
         if(newUser) {
           return {
             ok: true,
             error: null,
-            token: null
+            token
           };
         } else {
           return {
@@ -71,10 +76,11 @@ export class UserResolver {
 
         const checkPassword = await user.comparePasswords(password);
         if(checkPassword) {
+          const token = createJWT(user.id);
           return {
             ok: true,
             error: null,
-            token: "User Existing - Token"
+            token
           }
         } else {
           return {

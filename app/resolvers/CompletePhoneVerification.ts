@@ -3,6 +3,7 @@ import { CompletePhoneVerificationInput } from "../inputs/CompletePhoneVerificat
 import { Verification } from "../entities/Verification";
 import { CompletePhoneVerificationResponse } from "../responses/CompletePhoneVerificationResponse";
 import { User } from "../entities/User";
+import { createJWT } from "../utils/createJWT";
 
 @Resolver()
 export class CompletePhoneVerificationResolver {
@@ -36,10 +37,11 @@ export class CompletePhoneVerificationResolver {
             if(user) {
                 user.verifiedPoneNumber = true;
                 user.save();
+                const token = createJWT(user.id);
                 return {
                     ok: true,
                     error: null,
-                    token: "User Phone Number Exists"
+                    token
                 }
             } else {
                 // Phone Number is verified. But no user assigned to it as token is null.

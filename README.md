@@ -12,17 +12,17 @@ Lets go for a drive 🚗
 
 &#9745;  Complete Phone Number Verification
 
-&#9744; Sign up with Email
+&#9745; Sign up with Email
 
-&#9744; Toggle Driving Mode
+&#9745; Generate JWT
 
-&#9744; Verify JWT
+&#9745; Verify JWT
+
+&#9745; Get my Profile
 
 &#9744; Verify Email
 
 &#9744; Verifiy Email
-
-&#9744; Get my Profile
 
 &#9744; Update my Profile
 
@@ -31,6 +31,8 @@ Lets go for a drive 🚗
 &#9744; Edit Place
 
 &#9744; Delete Place
+
+&#9744; Toggle Driving Mode
 
 &#9744; Report Location / Orientation
 

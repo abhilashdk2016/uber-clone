@@ -3,12 +3,48 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type Chat {
+  createdAt: String!
+  id: ID!
+  messages: [Message!]!
+  participants: [User!]!
+  pickUpAddress: String!
+  updatedAt: String!
+}
+
+input CompletePhoneVerificationInput {
+  key: String!
+  phone: String!
+}
+
+type CompletePhoneVerificationResponse {
+  error: String
+  ok: Boolean!
+  token: String
+}
+
 input EmailSignInInput {
   email: String!
   password: String!
 }
 
 type EmailSignInResponse {
+  error: String
+  ok: Boolean!
+  token: String
+}
+
+input EmailSignUpInput {
+  age: Float!
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+  phoneNumber: String!
+  profilePhoto: String!
+}
+
+type EmailSignUpResponse {
   error: String
   ok: Boolean!
   token: String
@@ -27,8 +63,25 @@ type FacebookConnectResponse {
   token: String
 }
 
+type GetMyProfileResponse {
+  error: String
+  ok: Boolean!
+  user: User
+}
+
+type Message {
+  chat: Chat!
+  createdAt: String!
+  id: ID!
+  text: String!
+  updatedAt: String!
+  user: User!
+}
+
 type Mutation {
+  CompletePhoneVerification(data: CompletePhoneVerificationInput!): CompletePhoneVerificationResponse!
   EmailConnect(data: EmailSignInInput!): EmailSignInResponse!
+  EmailSignUp(data: EmailSignUpInput!): EmailSignUpResponse!
   FaceBookConnect(data: FaceBookConnectInput!): FacebookConnectResponse!
   PhoneVerification(data: PhoneVerificationInput!): PhoneVerificationResponse!
 }
@@ -43,5 +96,50 @@ type PhoneVerificationResponse {
 }
 
 type Query {
+  GetMyProfile: GetMyProfileResponse!
   returnHello(name: String!): String!
+}
+
+type Ride {
+  createdAt: String!
+  distance: String!
+  driver: User!
+  dropOffAddress: String!
+  dropOffLatitude: Float!
+  dropOffLongitude: Float!
+  duration: String!
+  id: ID!
+  passenger: User!
+  pickUpAddress: String!
+  pickUpLatitude: Float!
+  pickUpLongitude: Float!
+  price: Float!
+  status: String!
+  updatedAt: String!
+}
+
+type User {
+  age: Int!
+  chat: Chat!
+  createdAt: String!
+  email: String!
+  fbId: String!
+  firstName: String!
+  id: ID!
+  isDriving: Boolean!
+  isRiding: Boolean!
+  isTaken: Boolean!
+  lastLatitude: Float!
+  lastLongitude: Float!
+  lastName: String!
+  lastOrientation: Float!
+  messages: [Message!]!
+  password: String!
+  phoneNumber: String!
+  profilePhoto: String!
+  ridesAsDriver: [Ride!]!
+  ridesAsPassenger: [Ride!]!
+  updatedAt: String!
+  verifiedEmail: Boolean!
+  verifiedPoneNumber: Boolean!
 }
