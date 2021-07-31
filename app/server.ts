@@ -9,10 +9,12 @@ import connectionOptions from "./ormConfig";
 
 // resolvers
 import { UserResolver} from "./resolvers/User";
+import { PhoneVerificationResolver } from './resolvers/PhoneVerification';
+import { CompletePhoneVerificationResolver } from "./resolvers/CompletePhoneVerification";
 
 const main = async () => {
     const schema = await buildSchema({
-        resolvers: [ UserResolver ],
+        resolvers: [ UserResolver, PhoneVerificationResolver, CompletePhoneVerificationResolver ],
         emitSchemaFile: true,
         validate: false,
     });

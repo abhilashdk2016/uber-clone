@@ -1,7 +1,6 @@
-import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { ObjectType, Field, ID} from 'type-graphql';
 import { verificationTarget } from "../types";
-import { User } from "./User";
 
 const PHONE = "PHONE";
 const EMAIL = "EMAIL";
@@ -17,10 +16,6 @@ export class Verification extends BaseEntity {
     @Column({ type: "text", enum: [PHONE, EMAIL]})
     target: verificationTarget;
 
-    @Field(() => Boolean)
-    @Column({ type: "boolean", default: false })
-    used: boolean;
-
     @Field(() => String) 
     @Column({ type: "text"})
     payload: string;
@@ -29,10 +24,6 @@ export class Verification extends BaseEntity {
     @Column({ type: "text"})
     key: string;
 
-    @Field(() => User) 
-    @ManyToOne(() => User, user => user.verifications)
-    user: User;
-
     @Field(() => String)
     @CreateDateColumn()
     createdAt: string;
@@ -40,6 +31,10 @@ export class Verification extends BaseEntity {
     @Field(() => String)
     @UpdateDateColumn()
     updatedAt: string;
+
+    @Field(() => Boolean)
+    @Column({ type: "boolean", default: "false"})
+    verified: boolean;
 
     @BeforeInsert()
     createKey(): void {

@@ -4,13 +4,13 @@ Lets go for a drive 🚗
 ## Features
 
 
-&#9745; Signin / Signup with Facebook
+&#9745;  Signin / Signup with Facebook
 
-&#9745; Sign In with Email
+&#9745;  Sign In with Email
 
-&#9744; Start Phone Number Verification
+&#9745;  Start Phone Number Verification
 
-&#9744; Complete Phone Number Verification
+&#9745;  Complete Phone Number Verification
 
 &#9744; Sign up with Email
 

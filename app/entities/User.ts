@@ -4,7 +4,6 @@ import { BaseEntity, BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entit
 import { ObjectType, Field, ID, Float, Int } from 'type-graphql';
 import { Chat } from './Chat';
 import { Message } from './Message';
-import { Verification } from './Verification';
 import { Ride } from './Ride';
 
 @Entity()
@@ -98,10 +97,6 @@ export class User extends BaseEntity {
     @Field(() => [Message]) 
     @OneToMany(() => Message, message => message.user)
     messages: Message[];
-
-    @Field(() => [Verification]) 
-    @OneToMany(() => Verification, verification => verification.user)
-    verifications: Verification[];
 
     @Field(() => [Ride]) 
     @OneToMany(() => Ride, ride => ride.passenger)

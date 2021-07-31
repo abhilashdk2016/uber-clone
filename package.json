@@ -38,6 +38,7 @@
     "mongoose": "^5.13.3",
     "pg": "^8.7.1",
     "reflect-metadata": "^0.1.13",
+    "twilio": "^3.66.1",
     "type-graphql": "^1.1.1",
     "typeorm": "^0.2.34"
   },
@@ -47,6 +48,7 @@
     "@types/graphql": "^14.5.0",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^16.4.5",
+    "@types/twilio": "^3.19.3",
     "nodemon": "^2.0.12",
     "ts-node": "^10.1.0",
     "typescript": "^4.3.5"

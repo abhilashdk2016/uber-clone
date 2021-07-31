@@ -30,6 +30,16 @@ type FacebookConnectResponse {
 type Mutation {
   EmailConnect(data: EmailSignInInput!): EmailSignInResponse!
   FaceBookConnect(data: FaceBookConnectInput!): FacebookConnectResponse!
+  PhoneVerification(data: PhoneVerificationInput!): PhoneVerificationResponse!
+}
+
+input PhoneVerificationInput {
+  phone: String!
+}
+
+type PhoneVerificationResponse {
+  error: String
+  ok: Boolean!
 }
 
 type Query {
