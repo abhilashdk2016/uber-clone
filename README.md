@@ -1,2 +1,2 @@
-# uber-clone
-Uber cloned using React, Node, Postgress and GrapghQL
+# UBER CLONE
+## _Lets go for a drive_

@@ -1,0 +1,54 @@
+{
+  "name": "uber-clone",
+  "version": "1.0.0",
+  "description": "Uber Clone",
+  "main": "index.js",
+  "scripts": {
+    "start": "tsc && npm run serve",
+    "serve": "node dist/server.js",
+    "watch-node": "nodemon dist/server.js",
+    "build-ts": "tsc",
+    "watch-ts": "tsc -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhilashdk2016/uber-clone.git"
+  },
+  "keywords": [
+    "Uber",
+    "Clone",
+    "Graphql",
+    "React"
+  ],
+  "author": "Abhilash D K",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abhilashdk2016/uber-clone/issues"
+  },
+  "homepage": "https://github.com/abhilashdk2016/uber-clone#readme",
+  "dependencies": {
+    "@typegoose/typegoose": "^7.6.3",
+    "apollo-server-express": "^2.11.0",
+    "bcrypt": "^5.0.1",
+    "class-validator": "^0.13.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "graphql": "^15.5.1",
+    "mongoose": "^5.13.3",
+    "pg": "^8.7.1",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "^1.1.1",
+    "typeorm": "^0.2.34"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/express": "^4.17.13",
+    "@types/graphql": "^14.5.0",
+    "@types/mongoose": "^5.11.97",
+    "@types/node": "^16.4.5",
+    "nodemon": "^2.0.12",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5"
+  }
+}
