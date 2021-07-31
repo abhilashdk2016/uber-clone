@@ -15,9 +15,9 @@ export class User extends BaseEntity {
     id: number
 
     @Field(() => String)
-    @Column({ type: "text", unique: true })
+    @Column({ type: "text", unique: true, nullable: true })
     @IsEmail()
-    email: string
+    email: string | null;
 
     @Field(() => Boolean)
     @Column({ type: "boolean", default: false })
@@ -32,15 +32,15 @@ export class User extends BaseEntity {
     lastName: string
 
     @Field(() => Int)
-    @Column({ type: "int"})
+    @Column({ type: "int", nullable: true})
     age: number
 
     @Field(() => String)
-    @Column({ type: "text"})
+    @Column({ type: "text", nullable: true})
     password: string
 
     @Field(() => String)
-    @Column({ type: "text"})
+    @Column({ type: "text", nullable: true})
     phoneNumber: string;
 
     @Field(() => Boolean)
@@ -50,6 +50,10 @@ export class User extends BaseEntity {
     @Field(() => String)
     @Column({ type: "text"})
     profilePhoto: string;
+
+    @Field(() => String)
+    @Column({ type: "text", nullable: true})
+    fbId: string;
 
     @Field(() => String)
     @CreateDateColumn()

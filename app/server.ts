@@ -8,11 +8,11 @@ import { createConnection } from "typeorm";
 import connectionOptions from "./ormConfig";
 
 // resolvers
-import {HelloResolver} from "./resolvers/Hello";
+import { UserResolver} from "./resolvers/User";
 
 const main = async () => {
     const schema = await buildSchema({
-        resolvers: [ HelloResolver ],
+        resolvers: [ UserResolver ],
         emitSchemaFile: true,
         validate: false,
     });

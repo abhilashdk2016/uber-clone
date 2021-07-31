@@ -3,6 +3,23 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+input FaceBookConnectInput {
+  email: String!
+  fbId: String!
+  firstName: String!
+  lastName: String!
+}
+
+type FacebookConnectResponse {
+  error: String
+  ok: Boolean!
+  token: String
+}
+
+type Mutation {
+  FaceBookConnect(data: FaceBookConnectInput!): FacebookConnectResponse!
+}
+
 type Query {
   returnHello(name: String!): String!
 }
