@@ -3,6 +3,17 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+input EmailSignInInput {
+  email: String!
+  password: String!
+}
+
+type EmailSignInResponse {
+  error: String
+  ok: Boolean!
+  token: String
+}
+
 input FaceBookConnectInput {
   email: String!
   fbId: String!
@@ -17,6 +28,7 @@ type FacebookConnectResponse {
 }
 
 type Mutation {
+  EmailConnect(data: EmailSignInInput!): EmailSignInResponse!
   FaceBookConnect(data: FaceBookConnectInput!): FacebookConnectResponse!
 }
 

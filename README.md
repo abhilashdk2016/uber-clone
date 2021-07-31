@@ -6,7 +6,7 @@ Lets go for a drive 🚗
 
 &#9745; Signin / Signup with Facebook
 
-&#9744; Sign In with Email
+&#9745; Sign In with Email
 
 &#9744; Start Phone Number Verification
 
