@@ -20,9 +20,11 @@ Lets go for a drive 🚗
 
 &#9745; Get my Profile
 
-&#9744; Verify Email
+&#9745; Verify Email
 
-&#9744; Verifiy Email
+&#9745; Request Verifiy Email
+
+&#9745; Complete Verifiy Email
 
 &#9744; Update my Profile
 

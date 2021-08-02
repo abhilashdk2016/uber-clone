@@ -11,9 +11,6 @@ export class CompletePhoneVerificationResolver {
     async CompletePhoneVerification(@Arg("data") data: CompletePhoneVerificationInput) {
         try {
             const existingVerification = await Verification.findOne({ payload: data.phone, key: data.key });
-            if(existingVerification) {
-                existingVerification.remove();
-            }
             if(!existingVerification) {
                 return {
                     ok: false,

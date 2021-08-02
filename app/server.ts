@@ -14,6 +14,8 @@ import { CompletePhoneVerificationResolver } from "./resolvers/CompletePhoneVeri
 import { EmailSignUpResolver } from "./resolvers/EmailSignUp";
 import { decodeJWT } from "./utils/decodeJWT";
 import { GetMyProfileResolver } from "./resolvers/GetMyProfile";
+import { RequestEmailVerificationResolver } from "./resolvers/RequestEmailVerification";
+import { CompleteEmailVerificationResolver } from "./resolvers/CompleteEmailVerification";
 
 const main = async () => {
 
@@ -31,7 +33,14 @@ const main = async () => {
     }
 
     const schema = await buildSchema({
-        resolvers: [ UserResolver, PhoneVerificationResolver, CompletePhoneVerificationResolver, EmailSignUpResolver, GetMyProfileResolver ],
+        resolvers: [ UserResolver, 
+            PhoneVerificationResolver, 
+            CompletePhoneVerificationResolver, 
+            EmailSignUpResolver, 
+            GetMyProfileResolver, 
+            RequestEmailVerificationResolver,
+            CompleteEmailVerificationResolver
+         ],
         authChecker: ({ context: { req } }) => {
             if(req.user)
                 return true;

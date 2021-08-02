@@ -97,7 +97,13 @@ type PhoneVerificationResponse {
 
 type Query {
   GetMyProfile: GetMyProfileResponse!
+  RequestEmailVerification: RequestEmailVerificationResponse!
   returnHello(name: String!): String!
+}
+
+type RequestEmailVerificationResponse {
+  error: String
+  ok: Boolean!
 }
 
 type Ride {
