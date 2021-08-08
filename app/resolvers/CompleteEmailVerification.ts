@@ -1,13 +1,13 @@
 import { Resolver, Arg, Mutation, UseMiddleware, Ctx } from "type-graphql";
 import { Verification } from "../entities/Verification";
-import { CompleteEmailVerificationResponse } from "../responses/CompleteEmailVerificationResponse";
+import { ResponseWithToken } from "../responses/ResponseWithToken";
 import { AuthMiddleware } from "../middlewares/AuthMiddleware";
 import { CompleteEmailVerificationInput } from "../inputs/CompleteEmailVerificationInput";
 
 @Resolver()
 export class CompleteEmailVerificationResolver {
     @UseMiddleware(AuthMiddleware)
-    @Mutation(_returns => CompleteEmailVerificationResponse)
+    @Mutation(_returns => ResponseWithToken)
     async CompleteEmailVerification(@Arg("data") data:CompleteEmailVerificationInput ,@Ctx() ctx: any) {
         const { user } = ctx.req;
         if(user.email) {

@@ -1,13 +1,13 @@
 import { Resolver, Arg, Mutation } from "type-graphql";
 import { CompletePhoneVerificationInput } from "../inputs/CompletePhoneVerificationInput";
 import { Verification } from "../entities/Verification";
-import { CompletePhoneVerificationResponse } from "../responses/CompletePhoneVerificationResponse";
+import { ResponseWithToken } from "../responses/ResponseWithToken";
 import { User } from "../entities/User";
 import { createJWT } from "../utils/createJWT";
 
 @Resolver()
 export class CompletePhoneVerificationResolver {
-    @Mutation(_returns => CompletePhoneVerificationResponse)
+    @Mutation(_returns => ResponseWithToken)
     async CompletePhoneVerification(@Arg("data") data: CompletePhoneVerificationInput) {
         try {
             const existingVerification = await Verification.findOne({ payload: data.phone, key: data.key });

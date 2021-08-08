@@ -1,13 +1,13 @@
 import { AuthMiddleware } from "../middlewares/AuthMiddleware";
 import { Resolver, Query, Ctx, UseMiddleware } from "type-graphql";
-import { RequestEmailVerificationResponse } from "../responses/RequestEmailVerificationResponse";
+import { Response } from "../responses/Response";
 import { Verification } from "../entities/Verification";
 import { sendVerificationEmail } from "../utils/sendEmail";
 
 @Resolver()
 export class RequestEmailVerificationResolver {
     @UseMiddleware(AuthMiddleware)
-    @Query(() => RequestEmailVerificationResponse)
+    @Query(() => Response)
     async RequestEmailVerification(@Ctx() ctx: any) {
         const { user } = ctx.req;
         if(user.email && !user.verifiedEmail) {

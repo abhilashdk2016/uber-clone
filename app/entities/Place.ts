@@ -1,5 +1,6 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { ObjectType, Field, ID, Float} from 'type-graphql';
+import { User } from "./User";
 
 @Entity()
 @ObjectType()
@@ -27,6 +28,13 @@ export class Place extends BaseEntity {
     @Field(() => Float)
     @Column({ type: "double precision", default: 0})
     longitude: number;
+
+    @Column({ type: "int", nullable: true})
+    userId: number;
+
+    @Field(() => User)
+    @ManyToOne(() => User, user => user.places)
+    user: User;
 
     @Field(() => String)
     @CreateDateColumn()

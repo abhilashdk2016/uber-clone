@@ -1,14 +1,14 @@
 import { User } from "../entities/User";
 import { Resolver, Arg, Mutation } from "type-graphql";
 import { EmailSignUpInput } from "../inputs/EmailSignUpInput";
-import { EmailSignUpResponse } from "../responses/EmailSignUpResponse";
+import { ResponseWithToken } from "../responses/ResponseWithToken";
 import { createJWT } from "../utils/createJWT";
 import { Verification } from "../entities/Verification";
 import { sendVerificationEmail } from "../utils/sendEmail";
 
 @Resolver()
 export class EmailSignUpResolver {
-    @Mutation(_returns => EmailSignUpResponse)
+    @Mutation(_returns => ResponseWithToken)
     async EmailSignUp(@Arg("data") data: EmailSignUpInput) {
         try {
             const existingUser = await User.findOne({ email: data.email });
@@ -22,7 +22,6 @@ export class EmailSignUpResolver {
                 const phoneVerification = await Verification.findOne({ payload: data.phoneNumber, verified: true });
                 if(phoneVerification){
                     const newUser = await User.create({ ...data }).save();
-                    console.log(`newUser: ${newUser}`);
                     if(newUser.email) {
                         const emailVerification = await Verification.create({
                             payload: newUser.email,

@@ -3,6 +3,14 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+input AddPlaceInput {
+  address: String
+  isFav: Boolean
+  latitude: Float
+  longitude: Float
+  name: String
+}
+
 type Chat {
   createdAt: String!
   id: ID!
@@ -12,26 +20,24 @@ type Chat {
   updatedAt: String!
 }
 
+input CompleteEmailVerificationInput {
+  key: String!
+}
+
 input CompletePhoneVerificationInput {
   key: String!
   phone: String!
 }
 
-type CompletePhoneVerificationResponse {
-  error: String
-  ok: Boolean!
-  token: String
+input EditPlaceInput {
+  id: ID!
+  isFav: Boolean
+  name: String
 }
 
 input EmailSignInInput {
   email: String!
   password: String!
-}
-
-type EmailSignInResponse {
-  error: String
-  ok: Boolean!
-  token: String
 }
 
 input EmailSignUpInput {
@@ -44,12 +50,6 @@ input EmailSignUpInput {
   profilePhoto: String!
 }
 
-type EmailSignUpResponse {
-  error: String
-  ok: Boolean!
-  token: String
-}
-
 input FaceBookConnectInput {
   email: String!
   fbId: String!
@@ -57,10 +57,10 @@ input FaceBookConnectInput {
   lastName: String!
 }
 
-type FacebookConnectResponse {
+type GetMyPlaceResponse {
   error: String
   ok: Boolean!
-  token: String
+  places: [Place!]
 }
 
 type GetMyProfileResponse {
@@ -79,31 +79,58 @@ type Message {
 }
 
 type Mutation {
-  CompletePhoneVerification(data: CompletePhoneVerificationInput!): CompletePhoneVerificationResponse!
-  EmailConnect(data: EmailSignInInput!): EmailSignInResponse!
-  EmailSignUp(data: EmailSignUpInput!): EmailSignUpResponse!
-  FaceBookConnect(data: FaceBookConnectInput!): FacebookConnectResponse!
-  PhoneVerification(data: PhoneVerificationInput!): PhoneVerificationResponse!
+  AddPlace(data: AddPlaceInput!): Response!
+  CompleteEmailVerification(data: CompleteEmailVerificationInput!): ResponseWithToken!
+  CompletePhoneVerification(data: CompletePhoneVerificationInput!): ResponseWithToken!
+  DeletePlace(data: EditPlaceInput!): Response!
+  EditPlace(data: EditPlaceInput!): Response!
+  EmailConnect(data: EmailSignInInput!): ResponseWithToken!
+  EmailSignUp(data: EmailSignUpInput!): ResponseWithToken!
+  FaceBookConnect(data: FaceBookConnectInput!): ResponseWithToken!
+  PhoneVerification(data: PhoneVerificationInput!): Response!
+  ReportMovement(data: ReportMovementInput!): Response!
+  ToggleDrivingMode: Response!
+  UpdateProfile(data: UpdateProfileInput!): Response!
 }
 
 input PhoneVerificationInput {
   phone: String!
 }
 
-type PhoneVerificationResponse {
-  error: String
-  ok: Boolean!
+type Place {
+  address: String!
+  createdAt: String!
+  id: ID!
+  isFav: Boolean!
+  latitude: Float!
+  longitude: Float!
+  name: String!
+  updatedAt: String!
+  user: User!
 }
 
 type Query {
+  GetMyPlaces: GetMyPlaceResponse!
   GetMyProfile: GetMyProfileResponse!
-  RequestEmailVerification: RequestEmailVerificationResponse!
+  RequestEmailVerification: Response!
   returnHello(name: String!): String!
 }
 
-type RequestEmailVerificationResponse {
+input ReportMovementInput {
+  lastLatitude: Float
+  lastLongitude: Float
+  lastOrientation: Float
+}
+
+type Response {
   error: String
   ok: Boolean!
+}
+
+type ResponseWithToken {
+  error: String
+  ok: Boolean!
+  token: String
 }
 
 type Ride {
@@ -124,6 +151,19 @@ type Ride {
   updatedAt: String!
 }
 
+type Subscription {
+  driverUpdate: User!
+}
+
+input UpdateProfileInput {
+  age: Float
+  email: String
+  firstName: String
+  lastName: String
+  password: String
+  profilePhoto: String
+}
+
 type User {
   age: Int!
   chat: Chat!
@@ -142,6 +182,7 @@ type User {
   messages: [Message!]!
   password: String!
   phoneNumber: String!
+  places: [Place!]!
   profilePhoto: String!
   ridesAsDriver: [Ride!]!
   ridesAsPassenger: [Ride!]!

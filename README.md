@@ -26,21 +26,23 @@ Lets go for a drive 🚗
 
 &#9745; Complete Verifiy Email
 
-&#9744; Update my Profile
+&#9745; Update my Profile
 
-&#9744; Add Place
+&#9745; Add Place
 
-&#9744; Edit Place
+&#9745; Edit Place
 
-&#9744; Delete Place
+&#9745; Delete Place
 
-&#9744; Toggle Driving Mode
+&#9745; Get My Places
 
-&#9744; Report Location / Orientation
+&#9745; Toggle Driving Mode
 
-&#9744; See Nearby Drivers
+&#9745; Report Location / Orientation
 
-&#9744; Susbscribe to Nearby Drivers
+&#9745; See Nearby Drivers
+
+&#9745; Susbscribe to Nearby Drivers
 
 &#9744; Request a Ride
 

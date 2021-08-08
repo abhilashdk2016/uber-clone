@@ -1,22 +1,20 @@
 import { User } from "../entities/User";
-import { Resolver, Arg, Query, Mutation, Ctx } from "type-graphql";
+import { Resolver, Arg, Query, Mutation, Ctx, UseMiddleware } from "type-graphql";
 import { FaceBookConnectInput } from "../inputs/FaceBookConnectInput";
-import { FacebookConnectResponse } from "../responses/FacebookConnectResponse";
-import { EmailSignInResponse } from "../responses/EmailSignInResponse";
+import { ResponseWithToken } from "../responses/ResponseWithToken";
 import { EmailSignInInput } from "../inputs/EmailSignInInput";
 import { createJWT } from "../utils/createJWT";
+import { AuthMiddleware } from "../middlewares/AuthMiddleware";
 
 @Resolver()
 export class UserResolver {
-
-    
-
     @Query(_returns => String)
+    @UseMiddleware(AuthMiddleware)
     async returnHello(@Arg("name") name: string, @Ctx() _ctx: any){
       return `Hello ${name}`;
     };
 
-    @Mutation(_returns => FacebookConnectResponse)
+    @Mutation(_returns => ResponseWithToken)
     async FaceBookConnect(@Arg("data") data: FaceBookConnectInput) {
       const { fbId } = data;
       try {
@@ -61,7 +59,7 @@ export class UserResolver {
       }
     }
 
-    @Mutation(_returns => EmailSignInResponse)
+    @Mutation(_returns => ResponseWithToken)
     async EmailConnect(@Arg("data") data: EmailSignInInput) {
       const { email, password } = data;
       try {

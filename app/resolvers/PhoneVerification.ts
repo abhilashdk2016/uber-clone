@@ -1,12 +1,12 @@
 import { Resolver, Arg, Mutation } from "type-graphql";
-import { PhoneVerificationResponse } from "../responses/PhoneVerificationResponse";
+import { Response } from "../responses/Response";
 import { PhoneVerificationInput } from "../inputs/PhoneVerificationInput";
 import { Verification } from "../entities/Verification";
 import { sendVerificationSMS } from "../utils/sendSMS";
 
 @Resolver()
 export class PhoneVerificationResolver {
-    @Mutation(_returns => PhoneVerificationResponse)
+    @Mutation(_returns => Response)
     async PhoneVerification(@Arg("data") data: PhoneVerificationInput) {
         try {
             const existingVerification = await Verification.findOne({ payload: data.phone });

@@ -5,6 +5,7 @@ import { ObjectType, Field, ID, Float, Int } from 'type-graphql';
 import { Chat } from './Chat';
 import { Message } from './Message';
 import { Ride } from './Ride';
+import { Place } from './Place';
 
 @Entity()
 @ObjectType()
@@ -105,6 +106,10 @@ export class User extends BaseEntity {
     @Field(() => [Ride]) 
     @OneToMany(() => Ride, ride => ride.driver)
     ridesAsDriver: Ride[];
+
+    @Field(() => [Place]) 
+    @OneToMany(() => Place, place => place.user)
+    places: Place[];
 
     private hashPassword(password: string) : Promise<string> {
         return bcrypt.hash(password, 10);
