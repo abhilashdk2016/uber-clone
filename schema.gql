@@ -13,10 +13,15 @@ input AddPlaceInput {
 
 type Chat {
   createdAt: String!
+  driver: User!
+  driverId: Int!
   id: ID!
   messages: [Message!]!
-  participants: [User!]!
+  passenger: User!
+  passengerId: Int!
   pickUpAddress: String!
+  ride: Ride!
+  rideId: Int
   updatedAt: String!
 }
 
@@ -57,6 +62,16 @@ input FaceBookConnectInput {
   lastName: String!
 }
 
+input GetChatInput {
+  id: ID!
+}
+
+type GetChatResponse {
+  chat: Chat
+  error: String
+  ok: Boolean!
+}
+
 type GetMyPlaceResponse {
   error: String
   ok: Boolean!
@@ -69,8 +84,25 @@ type GetMyProfileResponse {
   user: User
 }
 
+type GetNearByRidesResponse {
+  error: String
+  ok: Boolean!
+  rides: Ride
+}
+
+type GetNearbyDriversResponse {
+  drivers: [User!]
+  error: String
+  ok: Boolean!
+}
+
+input GetRideInput {
+  id: ID!
+}
+
 type Message {
   chat: Chat!
+  chatId: Int
   createdAt: String!
   id: ID!
   text: String!
@@ -87,10 +119,13 @@ type Mutation {
   EmailConnect(data: EmailSignInInput!): ResponseWithToken!
   EmailSignUp(data: EmailSignUpInput!): ResponseWithToken!
   FaceBookConnect(data: FaceBookConnectInput!): ResponseWithToken!
+  NearByRides: GetNearByRidesResponse!
   PhoneVerification(data: PhoneVerificationInput!): Response!
   ReportMovement(data: ReportMovementInput!): Response!
+  RequestRide(data: RequestRideInput!): RequestRideResponse!
   ToggleDrivingMode: Response!
   UpdateProfile(data: UpdateProfileInput!): Response!
+  UpdateRide(data: UpdateRideInput!): Response!
 }
 
 input PhoneVerificationInput {
@@ -110,9 +145,13 @@ type Place {
 }
 
 type Query {
+  GetChat(data: GetChatInput!): GetChatResponse!
   GetMyPlaces: GetMyPlaceResponse!
   GetMyProfile: GetMyProfileResponse!
+  GetNearbyDrivers: GetNearbyDriversResponse!
+  GetRide(data: GetRideInput!): RequestRideResponse!
   RequestEmailVerification: Response!
+  SendChat(data: SendChatInput!): SendChatResponse!
   returnHello(name: String!): String!
 }
 
@@ -120,6 +159,24 @@ input ReportMovementInput {
   lastLatitude: Float
   lastLongitude: Float
   lastOrientation: Float
+}
+
+input RequestRideInput {
+  distance: String!
+  dropOffAddress: String!
+  dropOffLatitude: Float!
+  dropOffLongitude: Float!
+  duration: String!
+  pickUpAddress: String!
+  pickUpLatitude: Float!
+  pickUpLongitude: Float!
+  price: Float!
+}
+
+type RequestRideResponse {
+  error: String
+  ok: Boolean!
+  ride: Ride
 }
 
 type Response {
@@ -134,15 +191,19 @@ type ResponseWithToken {
 }
 
 type Ride {
+  chat: Chat
+  chatId: Int
   createdAt: String!
   distance: String!
-  driver: User!
+  driver: User
+  driverId: Int
   dropOffAddress: String!
   dropOffLatitude: Float!
   dropOffLongitude: Float!
   duration: String!
   id: ID!
   passenger: User!
+  passengerId: Int
   pickUpAddress: String!
   pickUpLatitude: Float!
   pickUpLongitude: Float!
@@ -151,8 +212,22 @@ type Ride {
   updatedAt: String!
 }
 
+input SendChatInput {
+  id: Float!
+  message: String!
+}
+
+type SendChatResponse {
+  error: String
+  message: Message
+  ok: Boolean!
+}
+
 type Subscription {
+  chatRoom: Message!
   driverUpdate: User!
+  nearByRide: Ride!
+  rideStatus: Ride!
 }
 
 input UpdateProfileInput {
@@ -164,9 +239,15 @@ input UpdateProfileInput {
   profilePhoto: String
 }
 
+input UpdateRideInput {
+  id: ID!
+  status: String
+}
+
 type User {
   age: Int!
-  chat: Chat!
+  chatsAsDriver: [Chat!]!
+  chatsAsPassenger: [Chat!]!
   createdAt: String!
   email: String!
   fbId: String!

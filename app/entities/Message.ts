@@ -1,5 +1,5 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { ObjectType, Field, ID } from 'type-graphql';
+import { ObjectType, Field, ID, Int } from 'type-graphql';
 import { User } from "./User";
 import { Chat } from "./Chat";
 
@@ -17,6 +17,10 @@ export class Message extends BaseEntity {
     @Field(() => Chat) 
     @ManyToOne(() => Chat, chat => chat.messages)
     chat: Chat;
+
+    @Field(() => Int, { nullable: true })
+    @Column({ nullable: true })
+    chatId: number;
 
     @Field(() => User) 
     @ManyToOne(() => User, user => user.messages)

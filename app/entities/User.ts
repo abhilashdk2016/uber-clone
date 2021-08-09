@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { IsEmail  } from 'class-validator';
-import { BaseEntity, BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { ObjectType, Field, ID, Float, Int } from 'type-graphql';
 import { Chat } from './Chat';
 import { Message } from './Message';
@@ -91,9 +91,13 @@ export class User extends BaseEntity {
     @Column({ type: "double precision", default: 0})
     lastOrientation: number;
 
-    @Field(() => Chat)
-    @ManyToOne(() => Chat, chat => chat.participants)
-    chat: Chat;
+    @Field(() => [Chat])
+    @OneToMany(() => Chat, chat => chat.passenger)
+    chatsAsPassenger: [Chat];
+
+    @Field(() => [Chat])
+    @OneToMany(() => Chat, chat => chat.driver)
+    chatsAsDriver: [Chat];
 
     @Field(() => [Message]) 
     @OneToMany(() => Message, message => message.user)

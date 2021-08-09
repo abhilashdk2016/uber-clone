@@ -44,16 +44,20 @@ Lets go for a drive 🚗
 
 &#9745; Susbscribe to Nearby Drivers
 
-&#9744; Request a Ride
+&#9745; Request a Ride
 
-&#9744; Get Nearby Ride Requests
+&#9745; Get Nearby Ride Requests
 
-&#9744; Subscribe to Nearbuy Ride Requests
+&#9745; Subscribe to Nearby Ride Requests
 
-&#9744; Subscribe ti Ride Status
+&#9745; Update Ride Status
 
-&#9744; Get Chat Room Messages
+&#9745; Subscribe to Ride Status
 
-&#9744; Susbscribe to Chat Room Messages
+&#9745; Create Chat Room
+
+&#9745; Get Chat Room Messages
 
 &#9744; Send a Chat Message
+
+&#9744; Susbscribe to Chat Room Messages

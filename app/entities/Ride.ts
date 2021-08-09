@@ -1,8 +1,8 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { ObjectType, Field, ID, Float} from 'type-graphql';
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { ObjectType, Field, ID, Float, Int} from 'type-graphql';
 import { rideStatus } from "../types";
 import { User } from "./User";
-
+import { Chat } from "./Chat";
 @Entity()
 @ObjectType()
 export class Ride extends BaseEntity {
@@ -11,7 +11,7 @@ export class Ride extends BaseEntity {
     id: number;
 
     @Field(() => String)
-    @Column({ type: "text", enum: ["ACCEPTED" , "FINISHED" , "CANCELED" , "REQUESTING" , "ONROUTE"]})
+    @Column({ type: "text", enum: ["ACCEPTED" , "FINISHED" , "CANCELED" , "REQUESTING" , "ONROUTE"], default: "REQUESTING"})
     status: rideStatus;
 
     @Field(() => String) 
@@ -50,9 +50,17 @@ export class Ride extends BaseEntity {
     @Column({ type: "double precision", default: 0})
     price: number;
 
-    @Field(() => User)
-    @ManyToOne(() => User, user => user.ridesAsPassenger)
+    @Field(() => Int, { nullable: true })
+    @Column({ nullable: true })
+    driverId: number;
+
+    @Field(() => User, { nullable: true })
+    @ManyToOne(() => User, user => user.ridesAsPassenger, { nullable: true })
     driver: User;
+
+    @Field(() => Int, { nullable: true })
+    @Column({ nullable: true })
+    passengerId: number;
 
     @Field(() => User)
     @ManyToOne(() => User, user => user.ridesAsDriver)
@@ -65,4 +73,13 @@ export class Ride extends BaseEntity {
     @Field(() => String)
     @UpdateDateColumn()
     updatedAt: string;
+
+    @Field(() => Chat, { nullable: true })
+    @JoinColumn()
+    @OneToOne(() => Chat, chat => chat.ride)
+    chat: Chat;
+
+    @Field(() => Int, { nullable: true })
+    @Column({ nullable: true })
+    chatId: number;
 }

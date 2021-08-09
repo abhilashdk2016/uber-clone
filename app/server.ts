@@ -27,6 +27,16 @@ import { EditPlaceResolver } from "./resolvers/EditPlaceResolver";
 import { DeletePlaceResolver } from "./resolvers/DeletePlaceResolver";
 import { GetMyPlacesResolver } from "./resolvers/GetMyPlacesResolver";
 import { DriversSubscription } from "./resolvers/DriversSubscription";
+import { NearByRidesResolver } from "./resolvers/GetNearByRide";
+import { NearByRideSubscription } from "./resolvers/NearByRideSubscription";
+import { SendChatResolver } from "./resolvers/SendChatMessage";
+import { GetChatResolver } from "./resolvers/GetChat";
+import { GetNearbyDriversResolver } from "./resolvers/GetNearbyDrivers";
+import { RequestRideResolver } from "./resolvers/RequestRide";
+import { RideStatusSubscription } from "./resolvers/RideStatusSubscription";
+import { UpdateRideResolver } from "./resolvers/UpdateRideStatus";
+import { GetRideeResolver } from "./resolvers/GetRide";
+import { ChatRoomSubscription } from "./resolvers/ChatRoomSubscription";
 
 const main = async () => {
 
@@ -58,7 +68,18 @@ const main = async () => {
             EditPlaceResolver,
             DeletePlaceResolver,
             GetMyPlacesResolver,
-            DriversSubscription
+            DriversSubscription,
+            NearByRidesResolver,
+            NearByRideSubscription,
+            SendChatResolver,
+            GetChatResolver,
+            GetNearbyDriversResolver,
+            RequestRideResolver,
+            RideStatusSubscription,
+            UpdateRideResolver,
+            GetRideeResolver,
+            ChatRoomSubscription,
+            SendChatResolver
          ],
         authChecker: ({ context: { req } }) => {
             if(req.user)
