@@ -58,6 +58,6 @@ Lets go for a drive 🚗
 
 &#9745; Get Chat Room Messages
 
-&#9744; Send a Chat Message
+&#9745; Send a Chat Message
 
-&#9744; Susbscribe to Chat Room Messages
+&#9745; Susbscribe to Chat Room Messages
