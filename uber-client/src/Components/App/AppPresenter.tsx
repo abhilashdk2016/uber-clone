@@ -10,7 +10,7 @@ import AddPlace from '../../Routes/AddPlace';
 import EditAccount from '../../Routes/EditAccount';
 import FindAddress from '../../Routes/FindAddress';
 import Home from '../../Routes/Home';
-import LoggedOut from '../../Routes/LoggedOut';
+import LoggedOut from '../../Routes/Login';
 import PhoneLogin from '../../Routes/PhoneLogin';
 import Places from '../../Routes/Places';
 import Ride from '../../Routes/Ride';
@@ -26,7 +26,7 @@ const LoggedOutRoutes: React.FC = () => (
     <Switch>
         <Route path="/" exact component={LoggedOut} />
         <Route path="/phone-login" component={PhoneLogin} />
-        <Route path="/verify-phone/:number" component={VerifyPhone} />
+        <Route path="/verify-phone" component={VerifyPhone} />
         <Route path="/social-login" component={SocialLogin} />
         <Redirect from="*" to="/" />
     </Switch>

@@ -4,6 +4,7 @@ import { createGlobalStyle, ThemedStyledComponentsModule } from 'styled-componen
 
 interface IThemeInterface {
     blueColor: string;
+    greyColor: string;
   }
 
 const {

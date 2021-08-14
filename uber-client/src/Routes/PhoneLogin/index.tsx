@@ -1,3 +1,2 @@
-const PhoneLogin = () => <>PhoneLogin</>;
-
-export default PhoneLogin;
+import PhoneLoginContainer from "./PhoneLoginContainer";
+export default PhoneLoginContainer;

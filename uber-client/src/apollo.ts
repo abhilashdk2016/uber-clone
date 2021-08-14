@@ -1,50 +1,92 @@
-import ApolloClient, { Operation } from "apollo-boost";
+import { ApolloClient, createHttpLink, InMemoryCache, split, gql } from "@apollo/client";
+import { setContext } from '@apollo/client/link/context';
+import { WebSocketLink } from '@apollo/client/link/ws';
+import { getMainDefinition } from '@apollo/client/utilities';
 
-const client = new ApolloClient({
-    clientState: {
-        defaults: {
-            auth: {
-                __typename: "Auth",
-                isLoggedIn: Boolean(localStorage.getItem("jwt"))
+interface Definition {
+    kind: string;
+    operation?: string;
+};
+
+
+const httpLink = createHttpLink({
+    uri: 'http://localhost:4000/graphql'
+});
+
+const authLink = setContext((_, { headers }) => {
+    return {
+        headers: {
+            ...headers,
+            "X-JWT": localStorage.getItem("jwt") || ""
+        }
+    }
+});
+
+const wsLink = new WebSocketLink({
+    uri: "ws://localhost:4000/subscriptions",
+    options: {
+        reconnect: true,
+        connectionParams: {
+            headers: {
+                "X-JWT": localStorage.getItem("jwt") || ""
             }
         }
     },
+});
+
+const link = split(
+    ({ query }) => {
+        const { kind, operation }: Definition = getMainDefinition(query);
+        return (
+            kind === 'OperationDefinition' && operation === 'subscription'
+        );
+    },
+    wsLink,
+    authLink.concat(httpLink)
+);
+
+const QUERY = gql`
+  query getAuth {
+    isLoggedIn @client
+  }
+`;
+
+const cache = new InMemoryCache();
+cache.writeQuery({
+    query: QUERY,
+    data: {
+        isLoggedIn: false
+    }
+});
+
+const client = new ApolloClient({
+    link,
+    cache,
     resolvers: {
         Mutation: {
             logUserIn: (_, { token }, { cache }) => {
                 localStorage.setItem("jwt", token);
-                cache.writeData({
+                cache.writeQuery({
+                    query: QUERY,
                     data: {
-                        auth: {
-                            __typeName: "Auth",
-                            isLoggedIn: true
-                        }
+                        isLoggedIn: true
                     }
                 });
                 return null;
             },
             logUserOut: (_, __, { cache}) => {
                 localStorage.removeItem("jwt");
-                cache.writeData({
+                cache.writeQuery({
+                    query: QUERY,
                     data: {
-                        auth: {
-                            __typeName: "Auth",
-                            isLoggedIn: false
-                        }
+                        isLoggedIn: false
                     }
                 });
                 return null;
             }
         }
     },
-    request: async(operation: Operation) => {
-        operation.setContext({
-            headers: {
-                "X-JWT": localStorage.getItem("jwt") || ""
-            }
-        });
-    },
-    uri: "http://localhost:40000/graphql"
+    
 });
 
 export default client;

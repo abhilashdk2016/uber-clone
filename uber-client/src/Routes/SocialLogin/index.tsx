@@ -1,3 +1,2 @@
-const SocialLogin = () => <>SocialLogin</>;
-
-export default SocialLogin;
+import SocialLoginContainer from "./SocialLoginContainer";
+export default SocialLoginContainer;

@@ -1,3 +1,2 @@
-const VerifyPhone = () => <>VerifyPhone</>;
-
-export default VerifyPhone;
+import VerifyPhoneContainer from "./VerifyPhoneContainer";
+export default VerifyPhoneContainer;
