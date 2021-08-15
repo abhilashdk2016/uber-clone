@@ -7,7 +7,7 @@ export const UPDATE_PROFILE = gql`
     $email: String
     $password: String
     $profilePhoto: String
-    $age: Floatß
+    $age: Float
   ) {
     UpdateProfile( data : {
         firstName: $firstName
