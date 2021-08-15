@@ -1,3 +1,7 @@
-const EditAccount = () => <>EditAccount</>;
+import EditAccountContainer from "./EditAccountContainer";
 
-export default EditAccount;
+export default EditAccountContainer;
+
+// const R = () => <span>lala</span>;
+
+// export default R;

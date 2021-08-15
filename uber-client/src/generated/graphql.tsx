@@ -385,12 +385,34 @@ export type User = {
   places: Array<Place>;
 };
 
+export type UpdateProfileMutationVariables = Exact<{
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  password?: Maybe<Scalars['String']>;
+  profilePhoto?: Maybe<Scalars['String']>;
+  age?: Maybe<Scalars['Float']>;
+}>;
+
+
+export type UpdateProfileMutation = { __typename?: 'Mutation', UpdateProfile: { __typename?: 'Response', ok: boolean, error?: Maybe<string> } };
+
 export type PhoneVerificationMutationVariables = Exact<{
   phone: Scalars['String'];
 }>;
 
 
 export type PhoneVerificationMutation = { __typename?: 'Mutation', PhoneVerification: { __typename?: 'Response', ok: boolean, error?: Maybe<string> } };
+
+export type ToggleDrivingMutationVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ToggleDrivingMutation = { __typename?: 'Mutation', ToggleDrivingMode: { __typename?: 'Response', ok: boolean, error?: Maybe<string> } };
+
+export type UserProfileQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UserProfileQuery = { __typename?: 'Query', GetMyProfile: { __typename?: 'GetMyProfileResponse', ok: boolean, error?: Maybe<string>, user?: Maybe<{ __typename?: 'User', profilePhoto: string, firstName: string, lastName: string, email: string, phoneNumber: string, isDriving: boolean }> } };
 
 export type VerifyPhoneMutationVariables = Exact<{
   phone: Scalars['String'];
@@ -401,6 +423,47 @@ export type VerifyPhoneMutationVariables = Exact<{
 export type VerifyPhoneMutation = { __typename?: 'Mutation', CompletePhoneVerification: { __typename?: 'ResponseWithToken', ok: boolean, error?: Maybe<string>, token?: Maybe<string> } };
 
 
+export const UpdateProfileDocument = gql`
+    mutation updateProfile($firstName: String, $lastName: String, $email: String, $password: String, $profilePhoto: String, $age: Float) {
+  UpdateProfile(
+    data: {firstName: $firstName, lastName: $lastName, email: $email, password: $password, profilePhoto: $profilePhoto, age: $age}
+  ) {
+    ok
+    error
+  }
+}
+    `;
+export type UpdateProfileMutationFn = Apollo.MutationFunction<UpdateProfileMutation, UpdateProfileMutationVariables>;
+
+/**
+ * __useUpdateProfileMutation__
+ *
+ * To run a mutation, you first call `useUpdateProfileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateProfileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateProfileMutation, { data, loading, error }] = useUpdateProfileMutation({
+ *   variables: {
+ *      firstName: // value for 'firstName'
+ *      lastName: // value for 'lastName'
+ *      email: // value for 'email'
+ *      password: // value for 'password'
+ *      profilePhoto: // value for 'profilePhoto'
+ *      age: // value for 'age'
+ *   },
+ * });
+ */
+export function useUpdateProfileMutation(baseOptions?: Apollo.MutationHookOptions<UpdateProfileMutation, UpdateProfileMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateProfileMutation, UpdateProfileMutationVariables>(UpdateProfileDocument, options);
+      }
+export type UpdateProfileMutationHookResult = ReturnType<typeof useUpdateProfileMutation>;
+export type UpdateProfileMutationResult = Apollo.MutationResult<UpdateProfileMutation>;
+export type UpdateProfileMutationOptions = Apollo.BaseMutationOptions<UpdateProfileMutation, UpdateProfileMutationVariables>;
 export const PhoneVerificationDocument = gql`
     mutation phoneVerification($phone: String!) {
   PhoneVerification(data: {phone: $phone}) {
@@ -435,6 +498,82 @@ export function usePhoneVerificationMutation(baseOptions?: Apollo.MutationHookOp
 export type PhoneVerificationMutationHookResult = ReturnType<typeof usePhoneVerificationMutation>;
 export type PhoneVerificationMutationResult = Apollo.MutationResult<PhoneVerificationMutation>;
 export type PhoneVerificationMutationOptions = Apollo.BaseMutationOptions<PhoneVerificationMutation, PhoneVerificationMutationVariables>;
+export const ToggleDrivingDocument = gql`
+    mutation toggleDriving {
+  ToggleDrivingMode {
+    ok
+    error
+  }
+}
+    `;
+export type ToggleDrivingMutationFn = Apollo.MutationFunction<ToggleDrivingMutation, ToggleDrivingMutationVariables>;
+
+/**
+ * __useToggleDrivingMutation__
+ *
+ * To run a mutation, you first call `useToggleDrivingMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useToggleDrivingMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [toggleDrivingMutation, { data, loading, error }] = useToggleDrivingMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useToggleDrivingMutation(baseOptions?: Apollo.MutationHookOptions<ToggleDrivingMutation, ToggleDrivingMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ToggleDrivingMutation, ToggleDrivingMutationVariables>(ToggleDrivingDocument, options);
+      }
+export type ToggleDrivingMutationHookResult = ReturnType<typeof useToggleDrivingMutation>;
+export type ToggleDrivingMutationResult = Apollo.MutationResult<ToggleDrivingMutation>;
+export type ToggleDrivingMutationOptions = Apollo.BaseMutationOptions<ToggleDrivingMutation, ToggleDrivingMutationVariables>;
+export const UserProfileDocument = gql`
+    query userProfile {
+  GetMyProfile {
+    ok
+    error
+    user {
+      profilePhoto
+      firstName
+      lastName
+      email
+      phoneNumber
+      isDriving
+    }
+  }
+}
+    `;
+
+/**
+ * __useUserProfileQuery__
+ *
+ * To run a query within a React component, call `useUserProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserProfileQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserProfileQuery(baseOptions?: Apollo.QueryHookOptions<UserProfileQuery, UserProfileQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserProfileQuery, UserProfileQueryVariables>(UserProfileDocument, options);
+      }
+export function useUserProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserProfileQuery, UserProfileQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserProfileQuery, UserProfileQueryVariables>(UserProfileDocument, options);
+        }
+export type UserProfileQueryHookResult = ReturnType<typeof useUserProfileQuery>;
+export type UserProfileLazyQueryHookResult = ReturnType<typeof useUserProfileLazyQuery>;
+export type UserProfileQueryResult = Apollo.QueryResult<UserProfileQuery, UserProfileQueryVariables>;
 export const VerifyPhoneDocument = gql`
     mutation verifyPhone($phone: String!, $key: String!) {
   CompletePhoneVerification(data: {phone: $phone, key: $key}) {

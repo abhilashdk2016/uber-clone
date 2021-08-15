@@ -83,7 +83,17 @@ const client = new ApolloClient({
                     }
                 });
                 return null;
-            }
+            },
+            checkUserLogin: (_, __, { cache }) => {
+                let jwt = localStorage.getItem("jwt");
+                cache.writeQuery({
+                    query: QUERY,
+                    data: {
+                        isLoggedIn: jwt ? true : false
+                    }
+                });
+                return null;
+            },
         }
     },
     

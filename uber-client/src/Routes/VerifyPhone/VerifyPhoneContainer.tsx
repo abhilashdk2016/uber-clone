@@ -18,7 +18,6 @@ const VerifyPhoneContainer: React.FC<RouteComponentProps<any>> = (props: any) =>
     const [verifyPhoneMutation, { data, loading } ] = useVerifyPhoneMutation();
     const [logUserIn] = useMutation(LOG_USER_IN);
     if(data && data.CompletePhoneVerification.ok) {
-        console.log('Verified');
         toast.success("Phone Number Verified. Logging in Now");
         logUserIn({ variables: { token: data.CompletePhoneVerification.token } });
     } else {

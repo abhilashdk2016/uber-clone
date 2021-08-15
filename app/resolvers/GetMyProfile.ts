@@ -7,7 +7,6 @@ export class GetMyProfileResolver {
     @UseMiddleware(AuthMiddleware)
     @Query(() => GetMyProfileResponse)
     async GetMyProfile(@Ctx() ctx: any) {
-        console.log(ctx);
         const { user } = ctx.req;
         return {
             ok: true,

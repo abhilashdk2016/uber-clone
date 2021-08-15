@@ -45,7 +45,8 @@ const LoggedInRoutes: React.FC = () => (
     </Switch>
 );
 
-const AppPresenter: React.FC<IProps> = ({ isLoggedIn }) => <>
+const AppPresenter: React.FC<IProps> = ({ isLoggedIn }) => {
+return <>
     <BrowserRouter>
         {
             isLoggedIn
@@ -54,6 +55,7 @@ const AppPresenter: React.FC<IProps> = ({ isLoggedIn }) => <>
         }
     </BrowserRouter>
 </>
+}
 
 AppPresenter.propTypes = {
     isLoggedIn: PropTypes.bool.isRequired

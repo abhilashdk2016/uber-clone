@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { IsEmail  } from 'class-validator';
-import { BaseEntity, BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity, BeforeInsert, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { ObjectType, Field, ID, Float, Int } from 'type-graphql';
 import { Chat } from './Chat';
 import { Message } from './Message';
@@ -120,9 +120,9 @@ export class User extends BaseEntity {
     }
 
     @BeforeInsert()
-    @BeforeUpdate()
+    //@BeforeUpdate()
     async savePassword() : Promise<void> {
-        if(this.password) {
+        if(this.password.length > 0) {
             this.password = await this.hashPassword(this.password);
         }
     }

@@ -7,6 +7,7 @@ import { buildSchema } from "type-graphql";
 import { createConnection } from "typeorm";
 import connectionOptions from "./ormConfig";
 import { createServer } from 'http';
+import cors from 'cors';
 
 // resolvers
 import { UserResolver} from "./resolvers/User";
@@ -39,19 +40,6 @@ import { GetRideeResolver } from "./resolvers/GetRide";
 import { ChatRoomSubscription } from "./resolvers/ChatRoomSubscription";
 
 const main = async () => {
-
-    // const jwt = async(req: any, _res: any, next: NextFunction) => {
-    //     const token = req.get("X-JWT");
-    //     if(token) {
-    //         const user = await decodeJWT(token);
-    //         if(user) {
-    //             req.user = user;
-    //         } else {
-    //             req.user = undefined;
-    //         }
-    //     }
-    //     next();
-    // }
 
     const schema = await buildSchema({
         resolvers: [ UserResolver, 
@@ -119,7 +107,7 @@ const main = async () => {
         } 
     }); 
     const app = Express();
-    //app.use(jwt);
+    app.use(cors());
     const ws = createServer( app );
     await server.start();
     server.applyMiddleware({ app });

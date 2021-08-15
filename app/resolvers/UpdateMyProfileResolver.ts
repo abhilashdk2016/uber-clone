@@ -4,6 +4,7 @@ import { Response } from "../responses/Response";
 import { AuthMiddleware } from "../middlewares/AuthMiddleware";
 import { User } from "../entities/User";
 import { cleanNullArgs } from "../utils/cleanNullArgs";
+import { getConnection } from "typeorm";
 
 @Resolver()
 export class UpdateProfileResolver {
@@ -17,7 +18,13 @@ export class UpdateProfileResolver {
                 user.password = data.password!;
                 user.save();
             }
-            await User.update({id: user.id }, { ...notNullUpdateValues });
+            //await User.update({id: user.id }, { ...notNullUpdateValues });
+            await getConnection()
+                .createQueryBuilder()
+                .update(User)
+                .set({ ...notNullUpdateValues })
+                .where("id = :id", { id: user.id})
+                .execute();
             return {
                 ok: true,
                 error: null
