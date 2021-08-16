@@ -78,7 +78,7 @@ const SettingsPresenter: React.FC<IProps> = ({
       </GridLink>
       {!placesLoading 
         && places 
-        && places.map(place => <Place fav={places.isFav} name={place.name} address={place.address} />)}
+        && places.map(place => <Place id={place.id} fav={place.isFav} name={place.name} address={place.address} />)}
       
       <SLink to={"/places"}>Go to Places</SLink>
       <FakeLink onClick={logUserOut as any}>Log Out</FakeLink>

@@ -385,6 +385,17 @@ export type User = {
   places: Array<Place>;
 };
 
+export type AddPlaceMutationVariables = Exact<{
+  name?: Maybe<Scalars['String']>;
+  isFav?: Maybe<Scalars['Boolean']>;
+  address?: Maybe<Scalars['String']>;
+  latitude?: Maybe<Scalars['Float']>;
+  longitude?: Maybe<Scalars['Float']>;
+}>;
+
+
+export type AddPlaceMutation = { __typename?: 'Mutation', AddPlace: { __typename?: 'Response', ok: boolean, error?: Maybe<string> } };
+
 export type UpdateProfileMutationVariables = Exact<{
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
@@ -396,6 +407,15 @@ export type UpdateProfileMutationVariables = Exact<{
 
 
 export type UpdateProfileMutation = { __typename?: 'Mutation', UpdateProfile: { __typename?: 'Response', ok: boolean, error?: Maybe<string> } };
+
+export type EditPlaceMutationVariables = Exact<{
+  name: Scalars['String'];
+  isFav: Scalars['Boolean'];
+  id: Scalars['ID'];
+}>;
+
+
+export type EditPlaceMutation = { __typename?: 'Mutation', EditPlace: { __typename?: 'Response', ok: boolean, error?: Maybe<string> } };
 
 export type GetPlacesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -428,6 +448,46 @@ export type VerifyPhoneMutationVariables = Exact<{
 export type VerifyPhoneMutation = { __typename?: 'Mutation', CompletePhoneVerification: { __typename?: 'ResponseWithToken', ok: boolean, error?: Maybe<string>, token?: Maybe<string> } };
 
 
+export const AddPlaceDocument = gql`
+    mutation addPlace($name: String, $isFav: Boolean, $address: String, $latitude: Float, $longitude: Float) {
+  AddPlace(
+    data: {name: $name, isFav: $isFav, address: $address, latitude: $latitude, longitude: $longitude}
+  ) {
+    ok
+    error
+  }
+}
+    `;
+export type AddPlaceMutationFn = Apollo.MutationFunction<AddPlaceMutation, AddPlaceMutationVariables>;
+
+/**
+ * __useAddPlaceMutation__
+ *
+ * To run a mutation, you first call `useAddPlaceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddPlaceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addPlaceMutation, { data, loading, error }] = useAddPlaceMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      isFav: // value for 'isFav'
+ *      address: // value for 'address'
+ *      latitude: // value for 'latitude'
+ *      longitude: // value for 'longitude'
+ *   },
+ * });
+ */
+export function useAddPlaceMutation(baseOptions?: Apollo.MutationHookOptions<AddPlaceMutation, AddPlaceMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddPlaceMutation, AddPlaceMutationVariables>(AddPlaceDocument, options);
+      }
+export type AddPlaceMutationHookResult = ReturnType<typeof useAddPlaceMutation>;
+export type AddPlaceMutationResult = Apollo.MutationResult<AddPlaceMutation>;
+export type AddPlaceMutationOptions = Apollo.BaseMutationOptions<AddPlaceMutation, AddPlaceMutationVariables>;
 export const UpdateProfileDocument = gql`
     mutation updateProfile($firstName: String, $lastName: String, $email: String, $password: String, $profilePhoto: String, $age: Float) {
   UpdateProfile(
@@ -469,6 +529,42 @@ export function useUpdateProfileMutation(baseOptions?: Apollo.MutationHookOption
 export type UpdateProfileMutationHookResult = ReturnType<typeof useUpdateProfileMutation>;
 export type UpdateProfileMutationResult = Apollo.MutationResult<UpdateProfileMutation>;
 export type UpdateProfileMutationOptions = Apollo.BaseMutationOptions<UpdateProfileMutation, UpdateProfileMutationVariables>;
+export const EditPlaceDocument = gql`
+    mutation editPlace($name: String!, $isFav: Boolean!, $id: ID!) {
+  EditPlace(data: {name: $name, isFav: $isFav, id: $id}) {
+    ok
+    error
+  }
+}
+    `;
+export type EditPlaceMutationFn = Apollo.MutationFunction<EditPlaceMutation, EditPlaceMutationVariables>;
+
+/**
+ * __useEditPlaceMutation__
+ *
+ * To run a mutation, you first call `useEditPlaceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditPlaceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editPlaceMutation, { data, loading, error }] = useEditPlaceMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      isFav: // value for 'isFav'
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useEditPlaceMutation(baseOptions?: Apollo.MutationHookOptions<EditPlaceMutation, EditPlaceMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditPlaceMutation, EditPlaceMutationVariables>(EditPlaceDocument, options);
+      }
+export type EditPlaceMutationHookResult = ReturnType<typeof useEditPlaceMutation>;
+export type EditPlaceMutationResult = Apollo.MutationResult<EditPlaceMutation>;
+export type EditPlaceMutationOptions = Apollo.BaseMutationOptions<EditPlaceMutation, EditPlaceMutationVariables>;
 export const GetPlacesDocument = gql`
     query getPlaces {
   GetMyPlaces {

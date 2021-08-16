@@ -23,6 +23,6 @@
 
     - &#9745; Saved Places
 
-    - &#9744; Add Place
+    - &#9745; Add Place
 
     - &#9744; Find Address
