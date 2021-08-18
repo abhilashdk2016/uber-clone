@@ -26,10 +26,11 @@ interface IProps {
   onClick?: any;
   disabled?: boolean;
   type: string;
+  className?: string;
 }
 
-const Button: React.FC<IProps> = ({ value, onClick, type, disabled = false }) => (
-  <Container value={value} disabled={disabled} onClick={onClick} type={type}/>
+const Button: React.FC<IProps> = ({ value, onClick, type, className, disabled = false }) => (
+  <Container value={value} disabled={disabled} onClick={onClick} type={type} className={className}/>
 );
 
 export default Button;

@@ -14,6 +14,7 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "@types/axios": "^0.14.0",
     "@types/jest": "^26.0.15",
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
@@ -26,6 +27,7 @@
     "apollo-client": "^2.6.10",
     "apollo-link-ws": "^1.0.20",
     "axios": "^0.21.1",
+    "google-maps-react": "^2.0.6",
     "graphql": "^15.5.1",
     "graphql-tag": "^2.12.5",
     "proptypes": "^1.1.0",
@@ -69,6 +71,7 @@
     ]
   },
   "devDependencies": {
+    "@types/googlemaps": "^3.43.3",
     "@types/graphql": "^14.5.0",
     "apollo": "^2.33.4"
   }

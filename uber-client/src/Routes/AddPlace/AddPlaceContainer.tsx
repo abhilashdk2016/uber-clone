@@ -15,21 +15,22 @@ interface IState {
 interface IProps extends RouteComponentProps<any> {}
 
 const AddPlaceContainer: React.FC<IProps> = (props) => {
-  const { history } = props;
-  const [state, setState] = useState<IState>({
-    address: "",
+  const { history, location } = props;
+  const { state = {} } = location as any;
+  const [localState, setState] = useState<IState>({
+    address: state.address || "",
     name: "",
-    latitude: 0,
-    longitude: 0,
+    latitude: state.latitude || 0,
+    longitude: state.longitude || 0,
     isFav: false
   });
   const [addPlaceMutation, { data, loading }] = useAddPlaceMutation({
        variables: {
-          name: state.name,
-          isFav: state.isFav,
-          address: state.address,
-          latitude: state.latitude,
-          longitude: state.longitude
+          name: localState.name,
+          isFav: localState.isFav,
+          address: localState.address,
+          latitude: localState.latitude,
+          longitude: localState.longitude
        },
        refetchQueries: ["getPlaces"]
      });
@@ -41,7 +42,7 @@ const AddPlaceContainer: React.FC<IProps> = (props) => {
     } else if(data && data.AddPlace.error) {
       toast.error(data.AddPlace.error);
     }
-   }, [data])
+   }, [data, history])
   const onInputChange: React.ChangeEventHandler<
     HTMLInputElement
   > = async event => {

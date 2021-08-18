@@ -17,6 +17,8 @@
 
     - &#9744; Ride
 
+    - &#9744; Chat
+
     - &#9745; Edit Account
 
     - &#9745; Settings
@@ -25,4 +27,4 @@
 
     - &#9745; Add Place
 
-    - &#9744; Find Address
+    - &#9745; Find Address
