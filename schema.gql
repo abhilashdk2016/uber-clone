@@ -87,7 +87,7 @@ type GetMyProfileResponse {
 type GetNearByRidesResponse {
   error: String
   ok: Boolean!
-  rides: Ride
+  ride: Ride
 }
 
 type GetNearbyDriversResponse {
@@ -119,7 +119,6 @@ type Mutation {
   EmailConnect(data: EmailSignInInput!): ResponseWithToken!
   EmailSignUp(data: EmailSignUpInput!): ResponseWithToken!
   FaceBookConnect(data: FaceBookConnectInput!): ResponseWithToken!
-  NearByRides: GetNearByRidesResponse!
   PhoneVerification(data: PhoneVerificationInput!): Response!
   ReportMovement(data: ReportMovementInput!): Response!
   RequestRide(data: RequestRideInput!): RequestRideResponse!
@@ -150,6 +149,7 @@ type Query {
   GetMyProfile: GetMyProfileResponse!
   GetNearbyDrivers: GetNearbyDriversResponse!
   GetRide(data: GetRideInput!): RequestRideResponse!
+  NearByRides: GetNearByRidesResponse!
   RequestEmailVerification: Response!
   SendChat(data: SendChatInput!): SendChatResponse!
   returnHello(name: String!): String!

@@ -15,7 +15,7 @@
 ### Logged In:
     - &#9744; Home
 
-    - &#9744; Ride
+    - &#9745; Ride
 
     - &#9744; Chat
 

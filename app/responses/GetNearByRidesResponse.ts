@@ -5,5 +5,5 @@ import { Ride } from "../entities/Ride";
 @ObjectType()
 export class GetNearByRidesResponse extends Response {
     @Field(() => Ride, { nullable: true })
-    rides?: Ride | null;
+    ride?: Ride | null; 
 }
