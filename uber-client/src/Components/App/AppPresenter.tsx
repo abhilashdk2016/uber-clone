@@ -39,7 +39,7 @@ const LoggedInRoutes: React.FC = () => (
         <Route path="/edit-account" component={EditAccount} />
         <Route path="/find-address" component={FindAddress} />
         <Route path="/places" component={Places} />
-        <Route path="/ride" component={Ride} />
+        <Route path="/ride/:rideId" component={Ride} />
         <Route path="/settings" component={Settings} />
         <Redirect from="*" to="/" />
     </Switch>

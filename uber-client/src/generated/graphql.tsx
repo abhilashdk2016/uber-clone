@@ -143,7 +143,7 @@ export type Mutation = {
   EditPlace: Response;
   DeletePlace: Response;
   RequestRide: RequestRideResponse;
-  UpdateRide: Response;
+  UpdateRide: UpdateRideResponse;
 };
 
 
@@ -356,6 +356,13 @@ export type UpdateRideInput = {
   id: Scalars['ID'];
 };
 
+export type UpdateRideResponse = {
+  __typename?: 'UpdateRideResponse';
+  ok: Scalars['Boolean'];
+  error?: Maybe<Scalars['String']>;
+  ride?: Maybe<Ride>;
+};
+
 export type User = {
   __typename?: 'User';
   id: Scalars['ID'];
@@ -384,6 +391,14 @@ export type User = {
   ridesAsDriver: Array<Ride>;
   places: Array<Place>;
 };
+
+export type AcceptRideMutationVariables = Exact<{
+  id: Scalars['ID'];
+  status?: Maybe<Scalars['String']>;
+}>;
+
+
+export type AcceptRideMutation = { __typename?: 'Mutation', UpdateRide: { __typename?: 'UpdateRideResponse', ok: boolean, error?: Maybe<string>, ride?: Maybe<{ __typename?: 'Ride', id: string }> } };
 
 export type AddPlaceMutationVariables = Exact<{
   name?: Maybe<Scalars['String']>;
@@ -427,6 +442,11 @@ export type GetNearByRidesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetNearByRidesQuery = { __typename?: 'Query', GetNearbyDrivers: { __typename?: 'GetNearbyDriversResponse', ok: boolean, error?: Maybe<string>, drivers?: Maybe<Array<{ __typename?: 'User', id: string, lastLatitude: number, lastLongitude: number }>> } };
 
+export type NearByRideSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type NearByRideSubscription = { __typename?: 'Subscription', nearByRide: { __typename?: 'Ride', id: string, status: string, duration: string, distance: string, pickUpAddress: string, dropOffAddress: string, price: number, chatId?: Maybe<number>, driver?: Maybe<{ __typename?: 'User', id: string, firstName: string, lastName: string, profilePhoto: string }>, passenger: { __typename?: 'User', id: string, firstName: string, lastName: string, profilePhoto: string } } };
+
 export type NearByRidesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -448,6 +468,13 @@ export type ReportLocationMutationVariables = Exact<{
 
 export type ReportLocationMutation = { __typename?: 'Mutation', ReportMovement: { __typename?: 'Response', ok: boolean, error?: Maybe<string> } };
 
+export type GetRideQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetRideQuery = { __typename?: 'Query', GetRide: { __typename?: 'RequestRideResponse', ok: boolean, error?: Maybe<string>, ride?: Maybe<{ __typename?: 'Ride', id: string, status: string, duration: string, distance: string, pickUpAddress: string, dropOffAddress: string, price: number, chatId?: Maybe<number>, driver?: Maybe<{ __typename?: 'User', id: string, firstName: string, lastName: string, profilePhoto: string }>, passenger: { __typename?: 'User', id: string, firstName: string, lastName: string, profilePhoto: string } }> } };
+
 export type RideRequestMutationVariables = Exact<{
   duration: Scalars['String'];
   distance: Scalars['String'];
@@ -463,15 +490,28 @@ export type RideRequestMutationVariables = Exact<{
 
 export type RideRequestMutation = { __typename?: 'Mutation', RequestRide: { __typename?: 'RequestRideResponse', ok: boolean, error?: Maybe<string>, ride?: Maybe<{ __typename?: 'Ride', id: string }> } };
 
+export type RideStatusSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type RideStatusSubscription = { __typename?: 'Subscription', rideStatus: { __typename?: 'Ride', id: string, status: string, duration: string, distance: string, pickUpAddress: string, dropOffAddress: string, price: number, chatId?: Maybe<number>, driver?: Maybe<{ __typename?: 'User', id: string, firstName: string, lastName: string, profilePhoto: string }>, passenger: { __typename?: 'User', id: string, firstName: string, lastName: string, profilePhoto: string } } };
+
 export type ToggleDrivingMutationVariables = Exact<{ [key: string]: never; }>;
 
 
 export type ToggleDrivingMutation = { __typename?: 'Mutation', ToggleDrivingMode: { __typename?: 'Response', ok: boolean, error?: Maybe<string> } };
 
+export type UpdateRideMutationVariables = Exact<{
+  id: Scalars['ID'];
+  status?: Maybe<Scalars['String']>;
+}>;
+
+
+export type UpdateRideMutation = { __typename?: 'Mutation', UpdateRide: { __typename?: 'UpdateRideResponse', ok: boolean, error?: Maybe<string>, ride?: Maybe<{ __typename?: 'Ride', id: string, status: string, duration: string, distance: string, pickUpAddress: string, dropOffAddress: string, price: number, chatId?: Maybe<number>, driver?: Maybe<{ __typename?: 'User', id: string, firstName: string, lastName: string, profilePhoto: string }>, passenger: { __typename?: 'User', id: string, firstName: string, lastName: string, profilePhoto: string } }> } };
+
 export type UserProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserProfileQuery = { __typename?: 'Query', GetMyProfile: { __typename?: 'GetMyProfileResponse', ok: boolean, error?: Maybe<string>, user?: Maybe<{ __typename?: 'User', profilePhoto: string, firstName: string, lastName: string, email: string, phoneNumber: string, isDriving: boolean }> } };
+export type UserProfileQuery = { __typename?: 'Query', GetMyProfile: { __typename?: 'GetMyProfileResponse', ok: boolean, error?: Maybe<string>, user?: Maybe<{ __typename?: 'User', id: string, profilePhoto: string, firstName: string, lastName: string, email: string, phoneNumber: string, isDriving: boolean }> } };
 
 export type VerifyPhoneMutationVariables = Exact<{
   phone: Scalars['String'];
@@ -482,6 +522,44 @@ export type VerifyPhoneMutationVariables = Exact<{
 export type VerifyPhoneMutation = { __typename?: 'Mutation', CompletePhoneVerification: { __typename?: 'ResponseWithToken', ok: boolean, error?: Maybe<string>, token?: Maybe<string> } };
 
 
+export const AcceptRideDocument = gql`
+    mutation acceptRide($id: ID!, $status: String) {
+  UpdateRide(data: {id: $id, status: $status}) {
+    ok
+    error
+    ride {
+      id
+    }
+  }
+}
+    `;
+export type AcceptRideMutationFn = Apollo.MutationFunction<AcceptRideMutation, AcceptRideMutationVariables>;
+
+/**
+ * __useAcceptRideMutation__
+ *
+ * To run a mutation, you first call `useAcceptRideMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAcceptRideMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [acceptRideMutation, { data, loading, error }] = useAcceptRideMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      status: // value for 'status'
+ *   },
+ * });
+ */
+export function useAcceptRideMutation(baseOptions?: Apollo.MutationHookOptions<AcceptRideMutation, AcceptRideMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AcceptRideMutation, AcceptRideMutationVariables>(AcceptRideDocument, options);
+      }
+export type AcceptRideMutationHookResult = ReturnType<typeof useAcceptRideMutation>;
+export type AcceptRideMutationResult = Apollo.MutationResult<AcceptRideMutation>;
+export type AcceptRideMutationOptions = Apollo.BaseMutationOptions<AcceptRideMutation, AcceptRideMutationVariables>;
 export const AddPlaceDocument = gql`
     mutation addPlace($name: String, $isFav: Boolean, $address: String, $latitude: Float, $longitude: Float) {
   AddPlace(
@@ -680,6 +758,54 @@ export function useGetNearByRidesLazyQuery(baseOptions?: Apollo.LazyQueryHookOpt
 export type GetNearByRidesQueryHookResult = ReturnType<typeof useGetNearByRidesQuery>;
 export type GetNearByRidesLazyQueryHookResult = ReturnType<typeof useGetNearByRidesLazyQuery>;
 export type GetNearByRidesQueryResult = Apollo.QueryResult<GetNearByRidesQuery, GetNearByRidesQueryVariables>;
+export const NearByRideDocument = gql`
+    subscription nearByRide {
+  nearByRide {
+    id
+    status
+    duration
+    distance
+    pickUpAddress
+    dropOffAddress
+    price
+    chatId
+    driver {
+      id
+      firstName
+      lastName
+      profilePhoto
+    }
+    passenger {
+      id
+      firstName
+      lastName
+      profilePhoto
+    }
+  }
+}
+    `;
+
+/**
+ * __useNearByRideSubscription__
+ *
+ * To run a query within a React component, call `useNearByRideSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useNearByRideSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNearByRideSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useNearByRideSubscription(baseOptions?: Apollo.SubscriptionHookOptions<NearByRideSubscription, NearByRideSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<NearByRideSubscription, NearByRideSubscriptionVariables>(NearByRideDocument, options);
+      }
+export type NearByRideSubscriptionHookResult = ReturnType<typeof useNearByRideSubscription>;
+export type NearByRideSubscriptionResult = Apollo.SubscriptionResult<NearByRideSubscription>;
 export const NearByRidesDocument = gql`
     query nearByRides {
   NearByRides {
@@ -799,6 +925,64 @@ export function useReportLocationMutation(baseOptions?: Apollo.MutationHookOptio
 export type ReportLocationMutationHookResult = ReturnType<typeof useReportLocationMutation>;
 export type ReportLocationMutationResult = Apollo.MutationResult<ReportLocationMutation>;
 export type ReportLocationMutationOptions = Apollo.BaseMutationOptions<ReportLocationMutation, ReportLocationMutationVariables>;
+export const GetRideDocument = gql`
+    query getRide($id: ID!) {
+  GetRide(data: {id: $id}) {
+    ok
+    error
+    ride {
+      id
+      status
+      duration
+      distance
+      pickUpAddress
+      dropOffAddress
+      price
+      chatId
+      driver {
+        id
+        firstName
+        lastName
+        profilePhoto
+      }
+      passenger {
+        id
+        firstName
+        lastName
+        profilePhoto
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetRideQuery__
+ *
+ * To run a query within a React component, call `useGetRideQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRideQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRideQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetRideQuery(baseOptions: Apollo.QueryHookOptions<GetRideQuery, GetRideQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetRideQuery, GetRideQueryVariables>(GetRideDocument, options);
+      }
+export function useGetRideLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRideQuery, GetRideQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetRideQuery, GetRideQueryVariables>(GetRideDocument, options);
+        }
+export type GetRideQueryHookResult = ReturnType<typeof useGetRideQuery>;
+export type GetRideLazyQueryHookResult = ReturnType<typeof useGetRideLazyQuery>;
+export type GetRideQueryResult = Apollo.QueryResult<GetRideQuery, GetRideQueryVariables>;
 export const RideRequestDocument = gql`
     mutation rideRequest($duration: String!, $distance: String!, $pickUpAddress: String!, $dropOffAddress: String!, $pickUpLatitude: Float!, $pickUpLongitude: Float!, $dropOffLatitude: Float!, $dropOffLongitude: Float!, $price: Float!) {
   RequestRide(
@@ -846,6 +1030,54 @@ export function useRideRequestMutation(baseOptions?: Apollo.MutationHookOptions<
 export type RideRequestMutationHookResult = ReturnType<typeof useRideRequestMutation>;
 export type RideRequestMutationResult = Apollo.MutationResult<RideRequestMutation>;
 export type RideRequestMutationOptions = Apollo.BaseMutationOptions<RideRequestMutation, RideRequestMutationVariables>;
+export const RideStatusDocument = gql`
+    subscription rideStatus {
+  rideStatus {
+    id
+    status
+    duration
+    distance
+    pickUpAddress
+    dropOffAddress
+    price
+    chatId
+    driver {
+      id
+      firstName
+      lastName
+      profilePhoto
+    }
+    passenger {
+      id
+      firstName
+      lastName
+      profilePhoto
+    }
+  }
+}
+    `;
+
+/**
+ * __useRideStatusSubscription__
+ *
+ * To run a query within a React component, call `useRideStatusSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useRideStatusSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRideStatusSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useRideStatusSubscription(baseOptions?: Apollo.SubscriptionHookOptions<RideStatusSubscription, RideStatusSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<RideStatusSubscription, RideStatusSubscriptionVariables>(RideStatusDocument, options);
+      }
+export type RideStatusSubscriptionHookResult = ReturnType<typeof useRideStatusSubscription>;
+export type RideStatusSubscriptionResult = Apollo.SubscriptionResult<RideStatusSubscription>;
 export const ToggleDrivingDocument = gql`
     mutation toggleDriving {
   ToggleDrivingMode {
@@ -879,12 +1111,70 @@ export function useToggleDrivingMutation(baseOptions?: Apollo.MutationHookOption
 export type ToggleDrivingMutationHookResult = ReturnType<typeof useToggleDrivingMutation>;
 export type ToggleDrivingMutationResult = Apollo.MutationResult<ToggleDrivingMutation>;
 export type ToggleDrivingMutationOptions = Apollo.BaseMutationOptions<ToggleDrivingMutation, ToggleDrivingMutationVariables>;
+export const UpdateRideDocument = gql`
+    mutation updateRide($id: ID!, $status: String) {
+  UpdateRide(data: {id: $id, status: $status}) {
+    ok
+    error
+    ride {
+      id
+      status
+      duration
+      distance
+      pickUpAddress
+      dropOffAddress
+      price
+      chatId
+      driver {
+        id
+        firstName
+        lastName
+        profilePhoto
+      }
+      passenger {
+        id
+        firstName
+        lastName
+        profilePhoto
+      }
+    }
+  }
+}
+    `;
+export type UpdateRideMutationFn = Apollo.MutationFunction<UpdateRideMutation, UpdateRideMutationVariables>;
+
+/**
+ * __useUpdateRideMutation__
+ *
+ * To run a mutation, you first call `useUpdateRideMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateRideMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateRideMutation, { data, loading, error }] = useUpdateRideMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      status: // value for 'status'
+ *   },
+ * });
+ */
+export function useUpdateRideMutation(baseOptions?: Apollo.MutationHookOptions<UpdateRideMutation, UpdateRideMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateRideMutation, UpdateRideMutationVariables>(UpdateRideDocument, options);
+      }
+export type UpdateRideMutationHookResult = ReturnType<typeof useUpdateRideMutation>;
+export type UpdateRideMutationResult = Apollo.MutationResult<UpdateRideMutation>;
+export type UpdateRideMutationOptions = Apollo.BaseMutationOptions<UpdateRideMutation, UpdateRideMutationVariables>;
 export const UserProfileDocument = gql`
     query userProfile {
   GetMyProfile {
     ok
     error
     user {
+      id
       profilePhoto
       firstName
       lastName

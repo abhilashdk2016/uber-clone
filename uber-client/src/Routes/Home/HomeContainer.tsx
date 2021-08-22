@@ -3,8 +3,9 @@ import { RouteComponentProps } from "react-router-dom";
 import { toast } from "react-toastify";
 import ReactDOM from "react-dom";
 import { geoCode, reverseGeoCode } from "../../mapHelper";
-import { useGetNearByRidesLazyQuery, useReportLocationMutation, useUserProfileQuery, useRideRequestMutation, useNearByRidesQuery } from "../../generated/graphql";
+import { useGetNearByRidesLazyQuery, useReportLocationMutation, useUserProfileQuery, useRideRequestMutation, useNearByRidesQuery, useAcceptRideMutation } from "../../generated/graphql";
 import HomePresenter from "./HomePresenter";
+import { NEAR_BY_RIDE_SUBSCRIPTION } from "../../graphql/NearByRideSubscription.graphql";
 
 interface IState {
   isMenuOpen: boolean;
@@ -56,7 +57,7 @@ const HomeContainer: React.FC<IProps>  = (props) => {
   // For User : Query to obtain near by drivers
   const [ getNearByRides, { data: nearByDriversData } ] = useGetNearByRidesLazyQuery({ pollInterval: 3000 });
   // For User : Mutation to Request A New Ride
-  const [rideRequestMutation, { data: requestRideData, loading: requestRideLoading }] = useRideRequestMutation({
+  const [rideRequestMutation, { data: requestRideData }] = useRideRequestMutation({
      variables: {
         duration: state.duration || "",
         distance: state.distance,
@@ -69,13 +70,51 @@ const HomeContainer: React.FC<IProps>  = (props) => {
         price: parseFloat(state.price || '0')
      },
    });
+  if(requestRideData && requestRideData.RequestRide.ok) {
+    const { history } = props;
+    const { ride } = requestRideData.RequestRide;
+    history.push({
+      pathname: `/ride/${ride?.id}`
+    });
+  }
   // For Driver : Mutation to obtain near by ride requests
   let isNormalUser = true;
   if(data && data.GetMyProfile.user && data.GetMyProfile.user.isDriving) {
     isNormalUser = false;
   }
-  // If User is a Driver, isDriving will be true, so is user is not a driver skip the following query
-  const { data: nearByRideData } = useNearByRidesQuery({ pollInterval: 3000, skip: isNormalUser});
+  // If User is a Driver, isDriving will be true, so if user is not a driver skip the following query
+  const { data: nearByRideData, subscribeToMore } = useNearByRidesQuery();
+  // const { data: nearByRideSubscriptionData} = useNearByRideSubscription({skip: isNormalUser});
+  // console.log(nearByRideSubscriptionData);
+  // console.log(nearByRideData);
+  if(!isNormalUser) {
+    subscribeToMore({
+      document: NEAR_BY_RIDE_SUBSCRIPTION,
+      updateQuery: (prev, { subscriptionData }) => {
+        const subData = subscriptionData as any;
+        if(!subscriptionData.data) {
+          return prev;
+        }
+        const newObject = Object.assign({}, prev, {
+          NearByRides: {
+            ...prev.NearByRides,
+            ride: subData.data.nearByRide
+          }
+        });
+        console.log([prev, newObject]);
+        return newObject;
+      }
+    })
+  }
+  // Mutation for accepting the Ride
+  const [acceptRideMutation, { data: acceptRideData }] = useAcceptRideMutation();
+  if(acceptRideData && acceptRideData.UpdateRide.ok) {
+    const { history } = props;
+    const { ride } = acceptRideData.UpdateRide;
+    history.push({
+      pathname: `/ride/${ride?.id}`
+    });
+  }
   // If we find nearby drivers draw them on the map
   if(nearByDriversData && nearByDriversData.GetNearbyDrivers.ok && nearByDriversData.GetNearbyDrivers.drivers) {
     const { drivers } = nearByDriversData.GetNearbyDrivers;
@@ -284,7 +323,8 @@ const HomeContainer: React.FC<IProps>  = (props) => {
                    price={state.price}
                    data={data}
                    onRideSubmit={rideRequestMutation}
-                   nearByRides={nearByRideData}/>
+                   nearByRides={nearByRideData}
+                   acceptRide={acceptRideMutation}/>
   )
 }
 

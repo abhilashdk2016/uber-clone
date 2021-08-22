@@ -1,3 +1,2 @@
-const Ride = () => <>Ride</>;
-
-export default Ride;
+import RideContainer from "./RideContainer";
+export default RideContainer;

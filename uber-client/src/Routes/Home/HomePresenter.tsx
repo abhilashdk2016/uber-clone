@@ -5,6 +5,9 @@ import Menu from "../../Components/Menu";
 import AddressBar from "../../Components/Addressbar";
 import Button from "../../Components/Button";
 import styled from "../../styled.d";
+import { AcceptRideMutationFn } from "../../generated/graphql";
+import RidePopUp from "../../Components/RidePopUp";
+import Ride from "../Ride";
 
 const Container = styled.div``;
 
@@ -57,6 +60,7 @@ interface IProps {
   data?: any;
   onRideSubmit: () => void;
   nearByRides?: any;
+  acceptRide: AcceptRideMutationFn
 }
 
 const HomePresenter: React.FC<IProps> = ({ 
@@ -70,7 +74,8 @@ const HomePresenter: React.FC<IProps> = ({
     price,
     data,
     onRideSubmit,
-    nearByRides}) => (
+    nearByRides,
+    acceptRide }) => (
   <Container>
     <Helmet>
       <title>Home | Number</title>
@@ -108,7 +113,19 @@ const HomePresenter: React.FC<IProps> = ({
         value={price ? "Change Address" : "Pick Address"}
         type="submit"
       />}
-      { nearByRides && "somebody wants your car"}
+      { nearByRides 
+        && nearByRides.NearByRides.ride
+        && <RidePopUp 
+              id={nearByRides.NearByRides.ride.id}
+              pickUpAddress={nearByRides.NearByRides.ride.pickUpAddress}
+              dropOffAddress={nearByRides.NearByRides.ride.dropOffAddress}
+              price={nearByRides.NearByRides.ride.price}
+              distance={nearByRides.NearByRides.ride.distance}
+              passengerName={`${nearByRides.NearByRides.ride.passenger.firstName} ${nearByRides.NearByRides.ride.passenger.lastName}`}
+              passengerPhoto={nearByRides.NearByRides.ride.passenger.profilePhoto}
+              acceptRideFn={acceptRide}
+          />
+      }
       <Map ref={mapRef} />
     </Sidebar>
   </Container>
