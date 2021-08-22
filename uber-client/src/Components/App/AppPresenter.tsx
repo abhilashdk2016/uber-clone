@@ -14,6 +14,7 @@ import LoggedOut from '../../Routes/Login';
 import PhoneLogin from '../../Routes/PhoneLogin';
 import Places from '../../Routes/Places';
 import Ride from '../../Routes/Ride';
+import Chat from '../../Routes/Chat';
 import Settings from '../../Routes/Settings';
 import SocialLogin from '../../Routes/SocialLogin';
 import VerifyPhone from '../../Routes/VerifyPhone';
@@ -40,6 +41,7 @@ const LoggedInRoutes: React.FC = () => (
         <Route path="/find-address" component={FindAddress} />
         <Route path="/places" component={Places} />
         <Route path="/ride/:rideId" component={Ride} />
+        <Route path="/chat/:chatId" component={Chat} />
         <Route path="/settings" component={Settings} />
         <Redirect from="*" to="/" />
     </Switch>

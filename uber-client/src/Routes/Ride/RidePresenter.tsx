@@ -112,13 +112,11 @@ const RidePresenter: React.FC<IProps> = ({ data, userData, updateRideFn }) => {
                         }
                         />
                     )}
-                    {ride.driver?.id === user.id ||
-                    (ride.passenger.id === user.id &&
-                        ride.status === "ACCEPTED" && (
+                    {ride.status !== "REQUESTING" && (
                         <Link to={`/chat/${ride.chatId}`}>
                             <ExtendedButton type="submit" value={"Chat"} onClick={null} />
                         </Link>
-                        ))}
+                        )}
                 </Buttons>
             </>
         }

@@ -7,7 +7,6 @@ import Button from "../../Components/Button";
 import styled from "../../styled.d";
 import { AcceptRideMutationFn } from "../../generated/graphql";
 import RidePopUp from "../../Components/RidePopUp";
-import Ride from "../Ride";
 
 const Container = styled.div``;
 

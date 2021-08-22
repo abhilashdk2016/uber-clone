@@ -38,7 +38,7 @@ const RideContainer: React.FC<IProps>  = (props) => {
         return newObject;
       }
     })
-  const [updateRideMutation, { data: updateRideStatusData }] = useUpdateRideMutation();
+  const [updateRideMutation] = useUpdateRideMutation();
   
   return ( 
     <RidePresenter data={data} loading={loading} userData={userProfileData} updateRideFn={updateRideMutation} />

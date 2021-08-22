@@ -25,6 +25,7 @@ export type AddPlaceInput = {
 export type Chat = {
   __typename?: 'Chat';
   id: Scalars['ID'];
+  messageId: Scalars['Int'];
   messages: Array<Message>;
   ride: Ride;
   rideId?: Maybe<Scalars['Int']>;
@@ -124,6 +125,7 @@ export type Message = {
   chat: Chat;
   chatId?: Maybe<Scalars['Int']>;
   user: User;
+  userId?: Maybe<Scalars['Int']>;
   createdAt: Scalars['String'];
   updatedAt: Scalars['String'];
 };
@@ -142,6 +144,7 @@ export type Mutation = {
   AddPlace: Response;
   EditPlace: Response;
   DeletePlace: Response;
+  SendChat: SendChatResponse;
   RequestRide: RequestRideResponse;
   UpdateRide: UpdateRideResponse;
 };
@@ -202,6 +205,11 @@ export type MutationDeletePlaceArgs = {
 };
 
 
+export type MutationSendChatArgs = {
+  data: SendChatInput;
+};
+
+
 export type MutationRequestRideArgs = {
   data: RequestRideInput;
 };
@@ -235,7 +243,6 @@ export type Query = {
   RequestEmailVerification: Response;
   GetMyPlaces: GetMyPlaceResponse;
   NearByRides: GetNearByRidesResponse;
-  SendChat: SendChatResponse;
   GetChat: GetChatResponse;
   GetNearbyDrivers: GetNearbyDriversResponse;
   GetRide: RequestRideResponse;
@@ -244,11 +251,6 @@ export type Query = {
 
 export type QueryReturnHelloArgs = {
   name: Scalars['String'];
-};
-
-
-export type QuerySendChatArgs = {
-  data: SendChatInput;
 };
 
 
@@ -324,7 +326,7 @@ export type Ride = {
 
 export type SendChatInput = {
   message: Scalars['String'];
-  id: Scalars['Float'];
+  id: Scalars['ID'];
 };
 
 export type SendChatResponse = {
@@ -411,6 +413,18 @@ export type AddPlaceMutationVariables = Exact<{
 
 export type AddPlaceMutation = { __typename?: 'Mutation', AddPlace: { __typename?: 'Response', ok: boolean, error?: Maybe<string> } };
 
+export type GetChatQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type GetChatQuery = { __typename?: 'Query', GetChat: { __typename?: 'GetChatResponse', ok: boolean, error?: Maybe<string>, chat?: Maybe<{ __typename?: 'Chat', passengerId: number, driverId: number, messages: Array<{ __typename?: 'Message', id: string, text: string, userId?: Maybe<number> }> }> } };
+
+export type MessageSubscriptionSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MessageSubscriptionSubscription = { __typename?: 'Subscription', chatRoom: { __typename?: 'Message', id: string, text: string, userId?: Maybe<number> } };
+
 export type UpdateProfileMutationVariables = Exact<{
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
@@ -494,6 +508,14 @@ export type RideStatusSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
 export type RideStatusSubscription = { __typename?: 'Subscription', rideStatus: { __typename?: 'Ride', id: string, status: string, duration: string, distance: string, pickUpAddress: string, dropOffAddress: string, price: number, chatId?: Maybe<number>, driver?: Maybe<{ __typename?: 'User', id: string, firstName: string, lastName: string, profilePhoto: string }>, passenger: { __typename?: 'User', id: string, firstName: string, lastName: string, profilePhoto: string } } };
+
+export type SendMessageMutationVariables = Exact<{
+  message: Scalars['String'];
+  id: Scalars['ID'];
+}>;
+
+
+export type SendMessageMutation = { __typename?: 'Mutation', SendChat: { __typename?: 'SendChatResponse', ok: boolean, error?: Maybe<string>, message?: Maybe<{ __typename?: 'Message', id: string, text: string, userId?: Maybe<number> }> } };
 
 export type ToggleDrivingMutationVariables = Exact<{ [key: string]: never; }>;
 
@@ -600,6 +622,82 @@ export function useAddPlaceMutation(baseOptions?: Apollo.MutationHookOptions<Add
 export type AddPlaceMutationHookResult = ReturnType<typeof useAddPlaceMutation>;
 export type AddPlaceMutationResult = Apollo.MutationResult<AddPlaceMutation>;
 export type AddPlaceMutationOptions = Apollo.BaseMutationOptions<AddPlaceMutation, AddPlaceMutationVariables>;
+export const GetChatDocument = gql`
+    query getChat($id: ID!) {
+  GetChat(data: {id: $id}) {
+    ok
+    error
+    chat {
+      passengerId
+      driverId
+      messages {
+        id
+        text
+        userId
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetChatQuery__
+ *
+ * To run a query within a React component, call `useGetChatQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetChatQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetChatQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetChatQuery(baseOptions: Apollo.QueryHookOptions<GetChatQuery, GetChatQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetChatQuery, GetChatQueryVariables>(GetChatDocument, options);
+      }
+export function useGetChatLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetChatQuery, GetChatQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetChatQuery, GetChatQueryVariables>(GetChatDocument, options);
+        }
+export type GetChatQueryHookResult = ReturnType<typeof useGetChatQuery>;
+export type GetChatLazyQueryHookResult = ReturnType<typeof useGetChatLazyQuery>;
+export type GetChatQueryResult = Apollo.QueryResult<GetChatQuery, GetChatQueryVariables>;
+export const MessageSubscriptionDocument = gql`
+    subscription messageSubscription {
+  chatRoom {
+    id
+    text
+    userId
+  }
+}
+    `;
+
+/**
+ * __useMessageSubscriptionSubscription__
+ *
+ * To run a query within a React component, call `useMessageSubscriptionSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useMessageSubscriptionSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMessageSubscriptionSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMessageSubscriptionSubscription(baseOptions?: Apollo.SubscriptionHookOptions<MessageSubscriptionSubscription, MessageSubscriptionSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<MessageSubscriptionSubscription, MessageSubscriptionSubscriptionVariables>(MessageSubscriptionDocument, options);
+      }
+export type MessageSubscriptionSubscriptionHookResult = ReturnType<typeof useMessageSubscriptionSubscription>;
+export type MessageSubscriptionSubscriptionResult = Apollo.SubscriptionResult<MessageSubscriptionSubscription>;
 export const UpdateProfileDocument = gql`
     mutation updateProfile($firstName: String, $lastName: String, $email: String, $password: String, $profilePhoto: String, $age: Float) {
   UpdateProfile(
@@ -1078,6 +1176,46 @@ export function useRideStatusSubscription(baseOptions?: Apollo.SubscriptionHookO
       }
 export type RideStatusSubscriptionHookResult = ReturnType<typeof useRideStatusSubscription>;
 export type RideStatusSubscriptionResult = Apollo.SubscriptionResult<RideStatusSubscription>;
+export const SendMessageDocument = gql`
+    mutation sendMessage($message: String!, $id: ID!) {
+  SendChat(data: {message: $message, id: $id}) {
+    ok
+    error
+    message {
+      id
+      text
+      userId
+    }
+  }
+}
+    `;
+export type SendMessageMutationFn = Apollo.MutationFunction<SendMessageMutation, SendMessageMutationVariables>;
+
+/**
+ * __useSendMessageMutation__
+ *
+ * To run a mutation, you first call `useSendMessageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSendMessageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sendMessageMutation, { data, loading, error }] = useSendMessageMutation({
+ *   variables: {
+ *      message: // value for 'message'
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useSendMessageMutation(baseOptions?: Apollo.MutationHookOptions<SendMessageMutation, SendMessageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<SendMessageMutation, SendMessageMutationVariables>(SendMessageDocument, options);
+      }
+export type SendMessageMutationHookResult = ReturnType<typeof useSendMessageMutation>;
+export type SendMessageMutationResult = Apollo.MutationResult<SendMessageMutation>;
+export type SendMessageMutationOptions = Apollo.BaseMutationOptions<SendMessageMutation, SendMessageMutationVariables>;
 export const ToggleDrivingDocument = gql`
     mutation toggleDriving {
   ToggleDrivingMode {

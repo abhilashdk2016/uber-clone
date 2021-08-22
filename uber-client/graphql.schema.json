@@ -133,6 +133,22 @@
             "deprecationReason": null
           },
           {
+            "name": "messageId",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "messages",
             "description": null,
             "args": [],
@@ -1091,6 +1107,18 @@
             "deprecationReason": null
           },
           {
+            "name": "userId",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Int",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "createdAt",
             "description": null,
             "args": [],
@@ -1513,6 +1541,39 @@
             "deprecationReason": null
           },
           {
+            "name": "SendChat",
+            "description": null,
+            "args": [
+              {
+                "name": "data",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "SendChatInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "SendChatResponse",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "RequestRide",
             "description": null,
             "args": [
@@ -1862,39 +1923,6 @@
               "ofType": {
                 "kind": "OBJECT",
                 "name": "GetNearByRidesResponse",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "SendChat",
-            "description": null,
-            "args": [
-              {
-                "name": "data",
-                "description": null,
-                "type": {
-                  "kind": "NON_NULL",
-                  "name": null,
-                  "ofType": {
-                    "kind": "INPUT_OBJECT",
-                    "name": "SendChatInput",
-                    "ofType": null
-                  }
-                },
-                "defaultValue": null,
-                "isDeprecated": false,
-                "deprecationReason": null
-              }
-            ],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "OBJECT",
-                "name": "SendChatResponse",
                 "ofType": null
               }
             },
@@ -2657,7 +2685,7 @@
               "name": null,
               "ofType": {
                 "kind": "SCALAR",
-                "name": "Float",
+                "name": "ID",
                 "ofType": null
               }
             },

@@ -7,6 +7,7 @@ interface IThemeInterface {
     greyColor: string;
     yellowColor: string;
     greenColor: string;
+    mine: boolean;
   }
 
 const {
