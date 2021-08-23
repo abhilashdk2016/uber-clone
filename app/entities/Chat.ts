@@ -11,6 +11,10 @@ export class Chat extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
+    @Field(() => Int)
+    @Column({ nullable: true })
+    messageId: number;
+
     @Field(() => [Message]) 
     @OneToMany(() => Message, message => message.chat)
     messages: Message[];

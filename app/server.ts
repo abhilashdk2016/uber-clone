@@ -80,8 +80,6 @@ const main = async () => {
 
     });
     const server = new ApolloServer({ schema, context: (ctx) => {
-        // console.log('Context in AP Server');
-        // console.log(ctx);
                 return {
                     req: ctx.req,
                     connection: ctx.connection
@@ -90,7 +88,8 @@ const main = async () => {
         subscriptions: {
             path: "/subscriptions",
             onConnect: async (connectionParams: any) => {
-                const token = connectionParams["X-JWT"];
+                const { headers } = connectionParams;
+                const token = headers["X-JWT"];
                 if(token) {
                     const user = await decodeJWT(token);
                     if(user) {
@@ -101,6 +100,7 @@ const main = async () => {
                 }
                 throw new Error("Not Authorised to Subscribe...");
             },
+            // },
             onDisconnect: () => {
                 console.log("Client disconnected from subscriptions");
             }

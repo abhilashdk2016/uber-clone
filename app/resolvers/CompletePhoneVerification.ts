@@ -32,7 +32,7 @@ export class CompletePhoneVerificationResolver {
         try {
             const user = await User.findOne({ phoneNumber: data.phone });
             if(user) {
-                user.verifiedPoneNumber = true;
+                user.verifiedPhoneNumber = true;
                 user.save();
                 const token = createJWT(user.id);
                 return {

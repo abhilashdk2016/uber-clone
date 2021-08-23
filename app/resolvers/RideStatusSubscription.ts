@@ -8,6 +8,7 @@ export class RideStatusSubscription {
         topics: "rideUpdate",
         filter: ({ payload, context }) => { 
             const user: User = context.connection.context.currentUser;
+            console.log(user);
             return (user.id === payload.driverId || user.id === payload.passengerId);
         },
     })

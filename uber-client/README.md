@@ -29,4 +29,6 @@
 
     - &#9745; Find Address
 
-    - &#9744; Email Sign In
+    - &#9745; Email Sign In
+
+    - &#9745; Email Sign Up

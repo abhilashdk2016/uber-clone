@@ -45,7 +45,7 @@ export class User extends BaseEntity {
 
     @Field(() => Boolean)
     @Column({ type: "boolean", default: false })
-    verifiedPoneNumber: boolean
+    verifiedPhoneNumber: boolean
 
     @Field(() => String)
     @Column({ type: "text"})

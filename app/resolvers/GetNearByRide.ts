@@ -12,10 +12,6 @@ export class NearByRidesResolver {
     async NearByRides(@Ctx() ctx: any) {
         const user: User  = ctx.req.user;
         const { lastLatitude, lastLongitude } = user;
-        console.log("pickUpLatitude");
-        console.log([lastLatitude - 0.05, lastLatitude + 0.05]);
-        console.log("pickUpLongitude");
-        console.log([lastLongitude - 0.05, lastLongitude + 0.05])
         if(user.isDriving) {
             try {
                 const ride = await getRepository(Ride).findOne({

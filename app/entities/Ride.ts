@@ -1,6 +1,6 @@
 import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { ObjectType, Field, ID, Float, Int} from 'type-graphql';
-import { rideStatus } from "../types";
+// import { rideStatus } from "../types";
 import { User } from "./User";
 import { Chat } from "./Chat";
 @Entity()
@@ -12,7 +12,7 @@ export class Ride extends BaseEntity {
 
     @Field(() => String)
     @Column({ type: "text", enum: ["ACCEPTED" , "FINISHED" , "CANCELED" , "REQUESTING" , "ONROUTE"], default: "REQUESTING"})
-    status: rideStatus;
+    status: String;
 
     @Field(() => String) 
     @Column({ type: "text"})

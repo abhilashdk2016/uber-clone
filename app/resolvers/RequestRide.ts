@@ -18,7 +18,7 @@ export class RequestRideResolver {
                 user.isRiding = true;
                 user.save();
                 return {
-                    ok: false,
+                    ok: true,
                     error: null,
                     ride
                 }

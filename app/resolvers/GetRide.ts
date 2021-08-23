@@ -12,7 +12,7 @@ export class GetRideeResolver {
     async GetRide(@Arg("data") data: GetRideInput, @Ctx() ctx: any) {
         const user : User = ctx.req.user;
         try {
-            const ride = await Ride.findOne({ id: data.id });
+            const ride = await Ride.findOne({ id: data.id }, { relations: ["passenger", "driver" ]});
             if(ride) {
                 if(ride.passengerId === user.id || ride.driverId === user.id) {
                     return {

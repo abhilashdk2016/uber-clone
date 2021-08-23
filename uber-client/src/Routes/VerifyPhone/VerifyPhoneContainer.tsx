@@ -3,8 +3,6 @@ import { RouteComponentProps } from "react-router-dom";
 import { useVerifyPhoneMutation } from "src/generated/graphql";
 import VerifyPhonePresenter from "./VerifyPhonePresenter";
 import { toast } from 'react-toastify';
-import { LOG_USER_IN } from '../../sharedQueries';
-import { useMutation } from "@apollo/react-hooks";
 
 interface IState {
     key: string;
@@ -16,10 +14,17 @@ const VerifyPhoneContainer: React.FC<RouteComponentProps<any>> = (props: any) =>
         props.history.push("/");
     }
     const [verifyPhoneMutation, { data, loading } ] = useVerifyPhoneMutation();
-    const [logUserIn] = useMutation(LOG_USER_IN);
     if(data && data.CompletePhoneVerification.ok) {
         toast.success("Phone Number Verified. Logging in Now");
-        logUserIn({ variables: { token: data.CompletePhoneVerification.token } });
+        toast.success("SMS Sent!");
+        setTimeout(() => { 
+            props.history.push({
+                pathname: "/email-sign-up",
+                state: {
+                    phoneNumber: props.location.state.phone
+                }
+            });
+        }, 2000);
     } else {
         toast.error(data?.CompletePhoneVerification.error);
     }

@@ -1,10 +1,10 @@
-import { InputType, Field } from "type-graphql";
+import { InputType, Field, ID } from "type-graphql";
 
 @InputType()
 export class SendChatInput {
-  @Field()
+  @Field(() => String)
   message: string;
 
-  @Field()
+  @Field(() => ID)
   id: number;
 }

@@ -77,7 +77,7 @@ const HomePresenter: React.FC<IProps> = ({
     acceptRide }) => (
   <Container>
     <Helmet>
-      <title>Home | Number</title>
+      <title>Home | Uber</title>
     </Helmet>
     <Sidebar
       sidebar={<Menu />}
@@ -101,7 +101,7 @@ const HomePresenter: React.FC<IProps> = ({
       {price && (
         <RequestButton
           onClick={onRideSubmit}
-          disabled={toAddress === ""}
+          disabled={toAddress === "" || data.GetMyProfile.user.isRiding }
           value={`Request Ride ($${price})`}
           type="submit"
         />

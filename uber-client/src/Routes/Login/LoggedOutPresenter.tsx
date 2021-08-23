@@ -86,9 +86,9 @@ const LoginPresenter: React.FC<IProps> = () => (
                 </FakeInput>
             </PhoneLogin>
         </Link>
-        <Link to={"/social-login"}>
+        <Link to={"/email-sign-in"}>
             <SocialLogin>
-                <SocialLink>Or connect with social Media</SocialLink>
+                <SocialLink>Or Login</SocialLink>
             </SocialLogin>
         </Link>
     </Footer>

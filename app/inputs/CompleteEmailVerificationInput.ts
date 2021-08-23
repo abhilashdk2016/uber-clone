@@ -4,4 +4,8 @@ import { InputType, Field } from "type-graphql";
 export class CompleteEmailVerificationInput {
   @Field()
   key: string;
+
+  @Field()
+  email: string;
+
 }

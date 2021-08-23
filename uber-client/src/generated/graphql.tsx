@@ -40,6 +40,7 @@ export type Chat = {
 
 export type CompleteEmailVerificationInput = {
   key: Scalars['String'];
+  email: Scalars['String'];
 };
 
 export type CompletePhoneVerificationInput = {
@@ -375,7 +376,7 @@ export type User = {
   age: Scalars['Int'];
   password: Scalars['String'];
   phoneNumber: Scalars['String'];
-  verifiedPoneNumber: Scalars['Boolean'];
+  verifiedPhoneNumber: Scalars['Boolean'];
   profilePhoto: Scalars['String'];
   fbId: Scalars['String'];
   createdAt: Scalars['String'];
@@ -425,6 +426,14 @@ export type MessageSubscriptionSubscriptionVariables = Exact<{ [key: string]: ne
 
 export type MessageSubscriptionSubscription = { __typename?: 'Subscription', chatRoom: { __typename?: 'Message', id: string, text: string, userId?: Maybe<number> } };
 
+export type VerifyEmailMutationVariables = Exact<{
+  key: Scalars['String'];
+  email: Scalars['String'];
+}>;
+
+
+export type VerifyEmailMutation = { __typename?: 'Mutation', CompleteEmailVerification: { __typename?: 'ResponseWithToken', ok: boolean, error?: Maybe<string>, token?: Maybe<string> } };
+
 export type UpdateProfileMutationVariables = Exact<{
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
@@ -445,6 +454,27 @@ export type EditPlaceMutationVariables = Exact<{
 
 
 export type EditPlaceMutation = { __typename?: 'Mutation', EditPlace: { __typename?: 'Response', ok: boolean, error?: Maybe<string> } };
+
+export type EmailSignInMutationVariables = Exact<{
+  email: Scalars['String'];
+  password: Scalars['String'];
+}>;
+
+
+export type EmailSignInMutation = { __typename?: 'Mutation', EmailConnect: { __typename?: 'ResponseWithToken', ok: boolean, error?: Maybe<string>, token?: Maybe<string> } };
+
+export type EmailSignUpMutationVariables = Exact<{
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  email: Scalars['String'];
+  password: Scalars['String'];
+  profilePhoto: Scalars['String'];
+  age: Scalars['Float'];
+  phoneNumber: Scalars['String'];
+}>;
+
+
+export type EmailSignUpMutation = { __typename?: 'Mutation', EmailSignUp: { __typename?: 'ResponseWithToken', ok: boolean, error?: Maybe<string>, token?: Maybe<string> } };
 
 export type GetPlacesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -698,6 +728,42 @@ export function useMessageSubscriptionSubscription(baseOptions?: Apollo.Subscrip
       }
 export type MessageSubscriptionSubscriptionHookResult = ReturnType<typeof useMessageSubscriptionSubscription>;
 export type MessageSubscriptionSubscriptionResult = Apollo.SubscriptionResult<MessageSubscriptionSubscription>;
+export const VerifyEmailDocument = gql`
+    mutation verifyEmail($key: String!, $email: String!) {
+  CompleteEmailVerification(data: {key: $key, email: $email}) {
+    ok
+    error
+    token
+  }
+}
+    `;
+export type VerifyEmailMutationFn = Apollo.MutationFunction<VerifyEmailMutation, VerifyEmailMutationVariables>;
+
+/**
+ * __useVerifyEmailMutation__
+ *
+ * To run a mutation, you first call `useVerifyEmailMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useVerifyEmailMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [verifyEmailMutation, { data, loading, error }] = useVerifyEmailMutation({
+ *   variables: {
+ *      key: // value for 'key'
+ *      email: // value for 'email'
+ *   },
+ * });
+ */
+export function useVerifyEmailMutation(baseOptions?: Apollo.MutationHookOptions<VerifyEmailMutation, VerifyEmailMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<VerifyEmailMutation, VerifyEmailMutationVariables>(VerifyEmailDocument, options);
+      }
+export type VerifyEmailMutationHookResult = ReturnType<typeof useVerifyEmailMutation>;
+export type VerifyEmailMutationResult = Apollo.MutationResult<VerifyEmailMutation>;
+export type VerifyEmailMutationOptions = Apollo.BaseMutationOptions<VerifyEmailMutation, VerifyEmailMutationVariables>;
 export const UpdateProfileDocument = gql`
     mutation updateProfile($firstName: String, $lastName: String, $email: String, $password: String, $profilePhoto: String, $age: Float) {
   UpdateProfile(
@@ -775,6 +841,85 @@ export function useEditPlaceMutation(baseOptions?: Apollo.MutationHookOptions<Ed
 export type EditPlaceMutationHookResult = ReturnType<typeof useEditPlaceMutation>;
 export type EditPlaceMutationResult = Apollo.MutationResult<EditPlaceMutation>;
 export type EditPlaceMutationOptions = Apollo.BaseMutationOptions<EditPlaceMutation, EditPlaceMutationVariables>;
+export const EmailSignInDocument = gql`
+    mutation emailSignIn($email: String!, $password: String!) {
+  EmailConnect(data: {email: $email, password: $password}) {
+    ok
+    error
+    token
+  }
+}
+    `;
+export type EmailSignInMutationFn = Apollo.MutationFunction<EmailSignInMutation, EmailSignInMutationVariables>;
+
+/**
+ * __useEmailSignInMutation__
+ *
+ * To run a mutation, you first call `useEmailSignInMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEmailSignInMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [emailSignInMutation, { data, loading, error }] = useEmailSignInMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *      password: // value for 'password'
+ *   },
+ * });
+ */
+export function useEmailSignInMutation(baseOptions?: Apollo.MutationHookOptions<EmailSignInMutation, EmailSignInMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EmailSignInMutation, EmailSignInMutationVariables>(EmailSignInDocument, options);
+      }
+export type EmailSignInMutationHookResult = ReturnType<typeof useEmailSignInMutation>;
+export type EmailSignInMutationResult = Apollo.MutationResult<EmailSignInMutation>;
+export type EmailSignInMutationOptions = Apollo.BaseMutationOptions<EmailSignInMutation, EmailSignInMutationVariables>;
+export const EmailSignUpDocument = gql`
+    mutation emailSignUp($firstName: String!, $lastName: String!, $email: String!, $password: String!, $profilePhoto: String!, $age: Float!, $phoneNumber: String!) {
+  EmailSignUp(
+    data: {firstName: $firstName, lastName: $lastName, profilePhoto: $profilePhoto, age: $age, phoneNumber: $phoneNumber, email: $email, password: $password}
+  ) {
+    ok
+    error
+    token
+  }
+}
+    `;
+export type EmailSignUpMutationFn = Apollo.MutationFunction<EmailSignUpMutation, EmailSignUpMutationVariables>;
+
+/**
+ * __useEmailSignUpMutation__
+ *
+ * To run a mutation, you first call `useEmailSignUpMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEmailSignUpMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [emailSignUpMutation, { data, loading, error }] = useEmailSignUpMutation({
+ *   variables: {
+ *      firstName: // value for 'firstName'
+ *      lastName: // value for 'lastName'
+ *      email: // value for 'email'
+ *      password: // value for 'password'
+ *      profilePhoto: // value for 'profilePhoto'
+ *      age: // value for 'age'
+ *      phoneNumber: // value for 'phoneNumber'
+ *   },
+ * });
+ */
+export function useEmailSignUpMutation(baseOptions?: Apollo.MutationHookOptions<EmailSignUpMutation, EmailSignUpMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EmailSignUpMutation, EmailSignUpMutationVariables>(EmailSignUpDocument, options);
+      }
+export type EmailSignUpMutationHookResult = ReturnType<typeof useEmailSignUpMutation>;
+export type EmailSignUpMutationResult = Apollo.MutationResult<EmailSignUpMutation>;
+export type EmailSignUpMutationOptions = Apollo.BaseMutationOptions<EmailSignUpMutation, EmailSignUpMutationVariables>;
 export const GetPlacesDocument = gql`
     query getPlaces {
   GetMyPlaces {

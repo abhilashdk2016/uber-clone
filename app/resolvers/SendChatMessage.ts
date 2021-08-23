@@ -1,5 +1,5 @@
 import { AuthMiddleware } from "../middlewares/AuthMiddleware";
-import { Resolver, Query, Ctx, UseMiddleware, Arg, PubSub, PubSubEngine } from "type-graphql";
+import { Resolver, Mutation, Ctx, UseMiddleware, Arg, PubSub, PubSubEngine } from "type-graphql";
 import { SendChatInput } from "../inputs/SendChatInput";
 import { User } from "../entities/User";
 import { SendChatResponse } from "../responses/SendChatResponse";
@@ -9,7 +9,7 @@ import { Chat } from "../entities/Chat";
 @Resolver()
 export class SendChatResolver {
     @UseMiddleware(AuthMiddleware)
-    @Query(() => SendChatResponse)
+    @Mutation(() => SendChatResponse)
     async SendChat(@Arg("data") data: SendChatInput, @Ctx() ctx: any, @PubSub() pubSub: PubSubEngine) {
         const user: User  = ctx.req.user;
         try {

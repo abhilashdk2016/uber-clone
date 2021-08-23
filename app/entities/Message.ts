@@ -26,6 +26,10 @@ export class Message extends BaseEntity {
     @ManyToOne(() => User, user => user.messages)
     user: User;
 
+    @Field(() => Int, { nullable: true })
+    @Column({ nullable: true })
+    userId: number;
+
     @Field(() => String)
     @CreateDateColumn()
     createdAt: string;

@@ -18,7 +18,9 @@ import Chat from '../../Routes/Chat';
 import Settings from '../../Routes/Settings';
 import SocialLogin from '../../Routes/SocialLogin';
 import VerifyPhone from '../../Routes/VerifyPhone';
-
+import EmailSignUp from '../../Routes/EmailSignUp';
+import EmailSignIn from '../../Routes/EmailSignIn';
+import VerifyEmail from '../../Routes/VerifyEmail';
 interface IProps {
     isLoggedIn: boolean;
 }
@@ -29,6 +31,10 @@ const LoggedOutRoutes: React.FC = () => (
         <Route path="/phone-login" component={PhoneLogin} />
         <Route path="/verify-phone" component={VerifyPhone} />
         <Route path="/social-login" component={SocialLogin} />
+        <Route path="/email-sign-up" component={EmailSignUp} />
+        <Route path="/email-sign-in" component={EmailSignIn} />
+        <Route path="/email-verify" component={VerifyEmail} />
+        
         <Redirect from="*" to="/" />
     </Switch>
 );

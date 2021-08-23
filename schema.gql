@@ -16,6 +16,7 @@ type Chat {
   driver: User!
   driverId: Int!
   id: ID!
+  messageId: Int!
   messages: [Message!]!
   passenger: User!
   passengerId: Int!
@@ -26,6 +27,7 @@ type Chat {
 }
 
 input CompleteEmailVerificationInput {
+  email: String!
   key: String!
 }
 
@@ -108,6 +110,7 @@ type Message {
   text: String!
   updatedAt: String!
   user: User!
+  userId: Int
 }
 
 type Mutation {
@@ -122,9 +125,10 @@ type Mutation {
   PhoneVerification(data: PhoneVerificationInput!): Response!
   ReportMovement(data: ReportMovementInput!): Response!
   RequestRide(data: RequestRideInput!): RequestRideResponse!
+  SendChat(data: SendChatInput!): SendChatResponse!
   ToggleDrivingMode: Response!
   UpdateProfile(data: UpdateProfileInput!): Response!
-  UpdateRide(data: UpdateRideInput!): Response!
+  UpdateRide(data: UpdateRideInput!): UpdateRideResponse!
 }
 
 input PhoneVerificationInput {
@@ -151,7 +155,6 @@ type Query {
   GetRide(data: GetRideInput!): RequestRideResponse!
   NearByRides: GetNearByRidesResponse!
   RequestEmailVerification: Response!
-  SendChat(data: SendChatInput!): SendChatResponse!
   returnHello(name: String!): String!
 }
 
@@ -213,7 +216,7 @@ type Ride {
 }
 
 input SendChatInput {
-  id: Float!
+  id: ID!
   message: String!
 }
 
@@ -244,6 +247,12 @@ input UpdateRideInput {
   status: String
 }
 
+type UpdateRideResponse {
+  error: String
+  ok: Boolean!
+  ride: Ride
+}
+
 type User {
   age: Int!
   chatsAsDriver: [Chat!]!
@@ -269,5 +278,5 @@ type User {
   ridesAsPassenger: [Ride!]!
   updatedAt: String!
   verifiedEmail: Boolean!
-  verifiedPoneNumber: Boolean!
+  verifiedPhoneNumber: Boolean!
 }
