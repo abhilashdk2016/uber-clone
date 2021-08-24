@@ -4,60 +4,60 @@ Lets go for a drive 🚗
 ## Features
 
 
-&#9745;  Signin / Signup with Facebook
+✔️  Signin / Signup with Facebook
 
-&#9745;  Sign In with Email
+✔️  Sign In with Email
 
-&#9745;  Start Phone Number Verification
+✔️  Start Phone Number Verification
 
-&#9745;  Complete Phone Number Verification
+✔️  Complete Phone Number Verification
 
-&#9745; Sign up with Email
+✔️ Sign up with Email
 
-&#9745; Generate JWT
+✔️ Generate JWT
 
-&#9745; Verify JWT
+✔️ Verify JWT
 
-&#9745; Get my Profile
+✔️ Get my Profile
 
-&#9745; Verify Email
+✔️ Verify Email
 
-&#9745; Request Verifiy Email
+✔️ Request Verifiy Email
 
-&#9745; Complete Verifiy Email
+✔️ Complete Verifiy Email
 
-&#9745; Update my Profile
+✔️ Update my Profile
 
-&#9745; Add Place
+✔️ Add Place
 
-&#9745; Edit Place
+✔️ Edit Place
 
-&#9745; Delete Place
+✔️ Delete Place
 
-&#9745; Get My Places
+✔️ Get My Places
 
-&#9745; Toggle Driving Mode
+✔️ Toggle Driving Mode
 
-&#9745; Report Location / Orientation
+✔️ Report Location / Orientation
 
-&#9745; See Nearby Drivers
+✔️ See Nearby Drivers
 
-&#9745; Susbscribe to Nearby Drivers
+✔️ Susbscribe to Nearby Drivers
 
-&#9745; Request a Ride
+✔️ Request a Ride
 
-&#9745; Get Nearby Ride Requests
+✔️ Get Nearby Ride Requests
 
-&#9745; Subscribe to Nearby Ride Requests
+✔️ Subscribe to Nearby Ride Requests
 
-&#9745; Update Ride Status
+✔️ Update Ride Status
 
-&#9745; Subscribe to Ride Status
+✔️ Subscribe to Ride Status
 
-&#9745; Create Chat Room
+✔️ Create Chat Room
 
-&#9745; Get Chat Room Messages
+✔️ Get Chat Room Messages
 
-&#9745; Send a Chat Message
+✔️ Send a Chat Message
 
-&#9745; Susbscribe to Chat Room Messages
+✔️ Susbscribe to Chat Room Messages
